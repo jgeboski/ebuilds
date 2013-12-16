@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<repositories version="1.0">
+  <repo priority="50" quality="experimental" status="unofficial">
+    <name>jgeboski</name>
+    <description>jgeboski's personal ebuilds</description>
+    <homepage>https://github.com/jgeboski/ebuilds</homepage>
+    <owner>
+      <name>James Geboski</name>
+      <email>jgeboski@gmail.com</email>
+    </owner>
+    <source type="git">https://github.com/jgeboski/ebuilds.git</source>
+  </repo>
+</repositories>
