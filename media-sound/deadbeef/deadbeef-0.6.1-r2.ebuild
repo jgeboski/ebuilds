@@ -95,8 +95,8 @@ src_prepare() {
 		  "${S}/plugins/wildmidi/wildmidiplug.c"
 	fi
 
-	for lang in ${LANGS};do
-		for l in ${lang};do
+	for lang in ${LANGS}; do
+		for l in ${lang}; do
 			if ! use linguas_${l}; then
 				sed -i "s|^${l}$||" po/LINGUAS
 			fi
@@ -106,7 +106,7 @@ src_prepare() {
 
 src_configure() {
 	my_config="
-		--docdir=/usr/share/doc/${P}
+		--docdir=/usr/share/doc/${PF}
 		--disable-rpath
 		$(use_enable aac)
 		$(use_enable adplug)
@@ -157,6 +157,26 @@ src_configure() {
 		$(use_enable wma)"
 
 	econf ${my_config}
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+
+	for lang in pt_BR ru; do
+		if use linguas_${lang}; then
+			docompress -x /usr/share/doc/${PF}/help.${lang}.txt
+		else
+			rm -f ${D}/usr/share/doc/${PF}/help.${lang}.txt
+		fi
+	done
+
+	docompress -x \
+		/usr/share/doc/${PF}/about.txt \
+		/usr/share/doc/${PF}/ChangeLog \
+		/usr/share/doc/${PF}/COPYING.GPLv2 \
+		/usr/share/doc/${PF}/COPYING.LGPLv2.1 \
+		/usr/share/doc/${PF}/help.txt \
+		/usr/share/doc/${PF}/translators.txt
 }
 
 pkg_preinst() {
