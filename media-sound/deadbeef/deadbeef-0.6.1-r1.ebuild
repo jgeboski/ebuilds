@@ -80,7 +80,7 @@ QA_TEXTRELS="usr/lib/deadbeef/ffap.so.0.0.0"
 
 pkg_pretend() {
 	if use psf || use dumb || use shn && use static ; then
-		die "ao/converter/dumb or shn plugins can't be builded statically"
+		die "ao, converter, dumb or shn plugin(s) cannot be built statically"
 	fi
 }
 
@@ -160,17 +160,13 @@ src_configure() {
 }
 
 pkg_preinst() {
-	rm -f \
-		${D}/usr/share/${PN}/help.* \
-		${D}/usr/share/doc/${P}/help.*
-
 	gnome2_icon_savelist
 	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
 	if use midi ; then
-		einfo "enable manually freepats support for timidity via"
+		einfo "enable freepats support for timidity via"
 		einfo "eselect timidity set --global freepats"
 	fi
 
