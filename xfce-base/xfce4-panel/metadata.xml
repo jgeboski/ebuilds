@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer>
+    <name>James Geboski</name>
+    <email>jgeboski@gmail.com</email>
+  </maintainer>
+  <description>Panel for the Xfce desktop environment</description>
+  <use>
+    <flag name="gtk3">Build support for GTK+3</flag>
+  </use>
+</pkgmetadata>
