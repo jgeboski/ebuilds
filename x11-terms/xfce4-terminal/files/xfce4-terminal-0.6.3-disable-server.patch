@@ -1,0 +1,40 @@
+diff --git a/terminal/main.c b/terminal/main.c
+index 93f8d40..9f9a0ce 100644
+--- a/terminal/main.c
++++ b/terminal/main.c
+@@ -241,7 +241,7 @@ main (int argc, char **argv)
+   g_type_init ();
+ #endif
+ 
+-  if (!disable_server)
++  if (G_UNLIKELY (!disable_server))
+     {
+       /* try to connect to an existing Terminal service */
+       if (terminal_gdbus_invoke_launch (nargc, nargv, &error))
+@@ -297,7 +297,7 @@ main (int argc, char **argv)
+ 
+   app = g_object_new (TERMINAL_TYPE_APP, NULL);
+ 
+-  if (!disable_server)
++  if (G_UNLIKELY (!disable_server))
+     {
+       if (!terminal_gdbus_register_service (app, &error))
+         {
+diff --git a/terminal/terminal-options.c b/terminal/terminal-options.c
+index 68b4ffa..0bb7e4b 100644
+--- a/terminal/terminal-options.c
++++ b/terminal/terminal-options.c
+@@ -161,11 +161,11 @@ terminal_options_parse (gint       argc,
+         *show_help = TRUE;
+       else if (terminal_option_cmp ("version", 'V', argc, argv, &n, NULL))
+         *show_version = TRUE;
+-      else if (terminal_option_cmp ("disable-server", 0, argc, argv, &n, NULL))
+-        *disable_server = TRUE;
+       else if (terminal_option_cmp ("color-table", 0, argc, argv, &n, NULL))
+         *show_colors = TRUE;
+     }
++
++  *disable_server = TRUE;
+ }
+ 
+ 

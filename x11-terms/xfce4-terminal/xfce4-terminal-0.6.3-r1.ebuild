@@ -32,6 +32,10 @@ DEPEND="
 pkg_setup() {
 	DOCS=( AUTHORS ChangeLog HACKING NEWS README THANKS )
 
+	# Disable the server until multi-display issues are resolved
+	# https://bugzilla.xfce.org/show_bug.cgi?id=10109
+	PATCHES=( "${FILESDIR}"/${P}-disable-server.patch )
+
 	XFCONF=(
 		$(xfconf_use_debug)
 	)
