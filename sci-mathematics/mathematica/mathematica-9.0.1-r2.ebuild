@@ -58,7 +58,6 @@ src_unpack() {
 		-path "${S}/Unix/Files/*" -maxdepth 1 -type d \
 		\( \
 			! -name "*.Linux$(use amd64 || echo -x86_64)" -a \
-			! -name "Fonts.*" -a \
 			! -name "Indexer.Online.English" -a \
 			! -name "MasterLayout.Paclet.English" -a \
 			! -name "Notebooks.Online.English" -a \
