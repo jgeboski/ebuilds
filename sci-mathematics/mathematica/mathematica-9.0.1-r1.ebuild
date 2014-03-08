@@ -67,9 +67,29 @@ src_unpack() {
 		-printf "%p/contents.tar.gz\n")
 }
 
-src_install() {
-	dodir /opt/${PN}
+src_prepare() {
+	fields="
+		CreationID
+		MinorReleaseNumber
+		ReleaseNumber
+		VersionNumber"
 
+	for field in ${fields}; do
+		read ${field} <<< $(\
+			find Unix -name info -exec cat {} \; | \
+			grep ^${field} | awk '{print $2}' | sort | uniq)
+	done
+
+	FullVersionNumber="${VersionNumber}.${ReleaseNumber}.${MinorReleaseNumber}"
+
+	echo "${CreationID}"        > .CreationID
+	echo "${FullVersionNumber}" > .VersionID
+
+	echo "FullVersionNumber: ${FullVersionNumber}" >> .Revision
+	echo "CreationID: ${CreationID}"               >> .Revision
+}
+
+src_install() {
 	insinto /usr/share/applications
 	doins ${FILESDIR}/${PN}.desktop
 
@@ -79,6 +99,9 @@ src_install() {
 	insinto /usr/share/mime/application
 	doins SystemFiles/Installation/*.xml
 	rm -rf SystemFiles/Installation/
+
+	insinto /opt/${PN}
+	doins .CreationID .Revision .VersionID
 
 	find . -path "./*" -maxdepth 1 -type d \
 		\( \
