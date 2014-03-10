@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit eutils fdo-mime gnome2-utils unpacker
+inherit eutils fdo-mime gnome2-utils multilib unpacker
 
 DESCRIPTION="Computational software based on symbolic mathematics"
 HOMEPAGE="http://www.wolfram.com/mathematica"
@@ -15,14 +15,28 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc selinux"
 
-RDEPEND=""
+# dev-libs/gmp:
+#   requires --enable-fat -- not available in gentoo overlay
+
+RDEPEND="
+	>=virtual/jdk-1.6
+	app-accessibility/espeak
+	app-text/aspell
+	dev-db/sqlite:3
+	dev-libs/icu
+	dev-libs/openssl
+	media-libs/mesa
+	media-libs/opencv
+	media-libs/portaudio
+	media-libs/libsndfile
+	net-libs/liboauth
+	sys-libs/zlib"
+
 DEPEND="${RDEPEND}"
 
 RESTRICT="bindist fetch mirror"
 QA_PREBUILT="*"
-
-PKGARCH=$(use amd64 && echo x86_64 || echo x86)
-S=${WORKDIR}/
+S="${WORKDIR}/"
 
 pkg_pretend() {
 	use x86 || use amd64 || die "Unsupported system architecture"
@@ -54,16 +68,16 @@ src_unpack() {
 		done
 	fi
 
-	unpacker $(find "${S}/Unix/Files" \
-		-path "${S}/Unix/Files/*" -maxdepth 1 -type d \
+	F="${S}/Unix/Files"
+	unpacker $(find "${F}" -path "${F}/*" -maxdepth 1 -type d \
 		\( \
-			! -name "*.Linux$(use amd64 || echo -x86_64)" -a \
+			! -name "*.Linux$(use amd64 || echo -x86-64)" -a \
 			! -name "Indexer.Online.English" -a \
 			! -name "MasterLayout.Paclet.English" -a \
 			! -name "Notebooks.Online.English" -a \
+			! -name "SystemFiles.Java.*" -a \
 			! -name "Usage.Online.English" \
-		\) \
-		-printf "%p/contents.tar.gz\n")
+		\) -printf "%p/contents.tar.gz\n")
 }
 
 src_prepare() {
@@ -86,6 +100,23 @@ src_prepare() {
 
 	echo "FullVersionNumber: ${FullVersionNumber}" >> .Revision
 	echo "CreationID: ${CreationID}"               >> .Revision
+
+	find -depth -name '*.so*' -a \
+		\( \
+			-name 'libaspell*' -o \
+			-name 'libcrypto*' -o \
+			-name 'libcv*' -o \
+			-name 'libcxcore*' -o \
+			-name 'libespeak*' -o \
+			-name 'libicu*' -o \
+			-name 'libml*' -o \
+			-name 'libOAuth*' -o \
+			-name 'libportaudio*' -o \
+			-name 'libsndfile*' -o \
+			-name 'libsqlite3*' -o \
+			-name 'libssl*' -o \
+			-name 'libz*' \
+		\) -exec rm -rf {} \;
 }
 
 src_install() {
@@ -107,8 +138,7 @@ src_install() {
 			! -name Files -a \
 			! -name Installer -a \
 			! -name Unix \
-		\) \
-		-exec mv {} ${D}/opt/${PN} \;
+		\) -exec mv {} ${D}/opt/${PN} \;
 
 	for size in 32 64 128; do
 		xresdir=/opt/${PN}/SystemFiles/FrontEnd/SystemResources/X
@@ -123,7 +153,17 @@ src_install() {
 		dosym /opt/${PN}/Executables/${executable} /opt/bin/${executable}
 	done
 
+	DIRARCH=$(use amd64 && echo -x86-64)
+	SYSFDIR="/opt/${PN}/SystemFiles"
+	LIBSDIR="${SYSFDIR}/Libraries/Linux${DIRARCH}"
+	JAVADIR="${SYSFDIR}/Java/Linux${DIRARCH}"
+	HTTPDIR="${SYSFDIR}/Links/HTTPClient/LibraryResources/Linux${DIRARCH}"
+
 	dosym /opt/${PN}/Executables/Mathematica /opt/bin/mathematica
+	dosym /usr/$(get_libdir)/libaspell.so    ${LIBSDIR}/libaspell.so.1
+	dosym /usr/$(get_libdir)/libcrypto.so    ${HTTPDIR}/libcrypto.so
+	dosym /usr/$(get_libdir)/libssl.so       ${HTTPDIR}/libssl.so
+	dosym $(java-config --jdk-home)          ${JAVADIR}
 
 	use doc     || find ${D} -depth -name Documentation -exec rm -rf {} \;
 	use selinux && find ${D} -name "*.so*" -exec chcon -t textrel_shlib_t {} \;
@@ -131,21 +171,16 @@ src_install() {
 
 pkg_preinst() {
 	gnome2_icon_savelist
-	gnome2_schemas_savelist
 }
 
 pkg_postinst() {
+	gnome2_icon_cache_update
 	fdo-mime_desktop_database_update
 	fdo-mime_mime_database_update
-
-	gnome2_icon_cache_update
-	gnome2_schemas_update
 }
 
 pkg_postrm() {
+	gnome2_icon_cache_update
 	fdo-mime_desktop_database_update
 	fdo-mime_mime_database_update
-
-	gnome2_icon_cache_update
-	gnome2_schemas_update
 }
