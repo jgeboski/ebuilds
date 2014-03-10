@@ -30,6 +30,7 @@ RDEPEND="
 	media-libs/portaudio
 	media-libs/libsndfile
 	net-libs/liboauth
+	sys-apps/pciutils
 	sys-libs/zlib"
 
 DEPEND="${RDEPEND}"
@@ -95,9 +96,8 @@ src_prepare() {
 
 	FullVersionNumber="${VersionNumber}.${ReleaseNumber}.${MinorReleaseNumber}"
 
-	echo "${CreationID}"        > .CreationID
-	echo "${FullVersionNumber}" > .VersionID
-
+	echo "${CreationID}"                            > .CreationID
+	echo "${FullVersionNumber}"                     > .VersionID
 	echo "FullVersionNumber: ${FullVersionNumber}" >> .Revision
 	echo "CreationID: ${CreationID}"               >> .Revision
 
@@ -117,6 +117,8 @@ src_prepare() {
 			-name 'libssl*' -o \
 			-name 'libz*' \
 		\) -exec rm -rf {} \;
+
+	epatch "${FILESDIR}/${P}-fix-path-lspci.patch"
 }
 
 src_install() {
