@@ -1,0 +1,31 @@
+From 36387ed6c75662a42d822d32029e425ae73a556d Mon Sep 17 00:00:00 2001
+From: Eric Koegel <eric.koegel@gmail.com>
+Date: Wed, 26 Feb 2014 10:02:35 +0300
+Subject: Reload the iconview on reload
+
+Cut the icon view code rather than a copy. Putting it back in.
+
+diff --git a/src/xfce-desktop.c b/src/xfce-desktop.c
+index ec66110..9be8504 100644
+--- a/src/xfce-desktop.c
++++ b/src/xfce-desktop.c
+@@ -1702,6 +1702,16 @@ xfce_desktop_refresh(XfceDesktop *desktop)
+ 
+         backdrop_changed_cb(backdrop, desktop);
+     }
++
++#ifdef ENABLE_DESKTOP_ICONS
++    /* reload icon view */
++    if(desktop->priv->icon_view) {
++        gtk_widget_destroy(desktop->priv->icon_view);
++        desktop->priv->icon_view = NULL;
++    }
++    xfce_desktop_setup_icon_view(desktop);
++#endif
++
+ }
+ 
+ void xfce_desktop_arrange_icons(XfceDesktop *desktop)
+-- 
+cgit v0.10.1
+

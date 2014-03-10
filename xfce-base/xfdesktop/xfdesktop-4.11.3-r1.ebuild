@@ -41,6 +41,12 @@ DEPEND="
 pkg_setup() {
 	DOCS=( AUTHORS ChangeLog NEWS README TODO )
 
+	PATCHES=(
+		"${FILESDIR}/${P}-fix-segfault-on-start.patch"
+		"${FILESDIR}/${P}-reload-iconview.patch"
+		"${FILESDIR}/${P}-fix-crash-display-removal.patch"
+	)
+
 	XFCONF=(
 		$(use_enable libnotify notifications)
 		$(use_enable thunar file-icons)
