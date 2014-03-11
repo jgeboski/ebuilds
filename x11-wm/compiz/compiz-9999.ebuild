@@ -18,7 +18,7 @@ EBZR_REPO_URI="lp:compiz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0.9"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="+cairo debug dbus fuse gnome gtk kde +svg test"
 
 COMMONDEPEND="
