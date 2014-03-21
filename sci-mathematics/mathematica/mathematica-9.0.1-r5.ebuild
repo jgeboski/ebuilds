@@ -37,7 +37,7 @@ DEPEND="${RDEPEND}"
 
 RESTRICT="bindist fetch mirror"
 QA_PREBUILT="*"
-S="${WORKDIR}/"
+S="${WORKDIR}"
 
 pkg_pretend() {
 	use x86 || use amd64 || die "Unsupported system architecture"
@@ -53,7 +53,7 @@ src_unpack() {
 
 	if [ -n "$offset" ]; then
 		offset=$(head -n ${offset} ${DISTDIR}/${A} | wc -c)
-		unpack_makeself ${A} ${offset} dd
+		unpack_makeself "${A}" "${offset}" dd
 	else
 		unpack_makeself
 	fi
@@ -65,7 +65,7 @@ src_unpack() {
 			Usage.Online.English"
 
 		for package in ${packages}; do
-			unpacker "${S}"/Unix/Files/${package}/contents.tar.gz
+			unpacker "${S}/Unix/Files/${package}/contents.tar.gz"
 		done
 	fi
 
@@ -78,7 +78,7 @@ src_unpack() {
 			! -name "Notebooks.Online.English" -a \
 			! -name "SystemFiles.Java.*" -a \
 			! -name "Usage.Online.English" \
-		\) -printf "%p/contents.tar.gz\n")
+		\) -printf '%p/contents.tar.gz\n')
 }
 
 src_prepare() {
@@ -90,7 +90,7 @@ src_prepare() {
 
 	for field in ${fields}; do
 		read ${field} <<< $(\
-			find Unix -name info -exec cat {} \; | \
+			find Unix -name info -exec cat '{}' \; | \
 			grep ^${field} | awk '{print $2}' | sort | uniq)
 	done
 
@@ -116,7 +116,7 @@ src_prepare() {
 			-name 'libsqlite3*' -o \
 			-name 'libssl*' -o \
 			-name 'libz*' \
-		\) -exec rm -rf {} \;
+		\) -exec rm -rf '{}' \;
 
 	epatch "${FILESDIR}/${P}-fix-path-lspci.patch"
 }
@@ -135,24 +135,34 @@ src_install() {
 	insinto /opt/${PN}
 	doins .CreationID .Revision .VersionID
 
-	find . -path "./*" -maxdepth 1 -type d \
+	INSTALLDIRS=$(find . -path "./*" -maxdepth 1 -type d \
 		\( \
 			! -name Files -a \
 			! -name Installer -a \
 			! -name Unix \
-		\) -exec mv {} ${D}/opt/${PN} \;
+		\))
 
-	for size in 32 64 128; do
-		xresdir=/opt/${PN}/SystemFiles/FrontEnd/SystemResources/X
-		hicrdir=/usr/share/icons/hicolor/${size}x${size}
+	for dir in ${INSTALLDIRS}; do
+		doins -r "${dir}"
+	done
 
-		dosym \
-			${xresdir}/Mathematica-${size}.png \
-			${hicrdir}/apps/mathematica.png
+	find ${INSTALLDIRS} -type f -print0 | while read -d $'\0' file; do
+		if head -1 "${file}" | grep -q 'ELF\|#!'; then
+			fperms a+x "/opt/${PN}/${file}"
+		fi
 	done
 
 	for executable in $(ls -1 ${D}/opt/${PN}/Executables); do
 		dosym /opt/${PN}/Executables/${executable} /opt/bin/${executable}
+	done
+
+	for size in 32 64 128; do
+		xresdir="/opt/${PN}/SystemFiles/FrontEnd/SystemResources/X"
+		hicrdir="/usr/share/icons/hicolor/${size}x${size}"
+
+		dosym \
+			${xresdir}/Mathematica-${size}.png \
+			${hicrdir}/apps/mathematica.png
 	done
 
 	DIRARCH=$(use amd64 && echo -x86-64)
@@ -167,8 +177,13 @@ src_install() {
 	dosym /usr/$(get_libdir)/libssl.so       ${HTTPDIR}/libssl.so
 	dosym $(java-config --jdk-home)          ${JAVADIR}
 
-	use doc     || find ${D} -depth -name Documentation -exec rm -rf {} \;
-	use selinux && find ${D} -name "*.so*" -exec chcon -t textrel_shlib_t {} \;
+	if use !doc; then
+		find "${D}" -depth -name Documentation -exec rm -rf '{}' \;
+	fi
+
+	if use selinux; then
+		find "${D}" -name "*.so*" -exec chcon -t textrel_shlib_t '{}' \;
+	fi
 }
 
 pkg_preinst() {
