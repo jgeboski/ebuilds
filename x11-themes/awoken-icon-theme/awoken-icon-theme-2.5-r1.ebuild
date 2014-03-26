@@ -30,6 +30,28 @@ src_unpack() {
 src_prepare() {
 	epatch "${FILESDIR}/${P}-fix-syntax-errors.patch"
 	epatch "${FILESDIR}/${P}-customizer-variables.patch"
+
+	MAINDIR="AwOken"
+
+	for dir in $(find -path './*' -maxdepth 1 -type d ! -iname ${MAINDIR}); do
+		for file in $(find "${dir}" -type f); do
+			link="${MAINDIR}/$(echo "${file}" | cut -d/ -f3-)"
+
+			[ -e "${link}" ] || continue
+
+			fsum=$(md5sum "${file}" | awk '{print $1}')
+			lsum=$(md5sum "${link}" | awk '{print $1}')
+
+			[ "${fsum}" == "${lsum}" ] || continue
+
+			for i in $(echo "${file}" | grep -o / | tail -n +2); do
+				link="../${link}"
+			done
+
+			rm -f "${file}"
+			ln -sf "${link}" "${file}"
+		done
+	done
 }
 
 src_compile() {
