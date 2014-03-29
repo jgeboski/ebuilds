@@ -89,6 +89,14 @@ src_install() {
 			-name "*.sh" -o \
 			-name ".AwOkenrc*" \
 		\) -exec rm -rf '{}' \;
+
+	MAINICON="nvidia-settings.png"
+	LINKICON="nvidia-drivers-settings.png"
+
+	for icon in $(find \( -type f -o -type l \) -name ${MAINICON}); do
+		idir=$(dirname $(echo ${icon} | cut -d/ -f2-))
+		dosym ${MAINICON} /usr/share/icons/${idir}/${LINKICON}
+	done
 }
 
 pkg_preinst() {
