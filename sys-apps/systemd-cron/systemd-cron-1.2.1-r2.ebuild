@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="
-	>=sys-apps/systemd-197
+	>=sys-apps/systemd-212
 	sys-apps/debianutils
 	sys-process/cronbase"
 
@@ -32,7 +32,7 @@ src_configure() {
 		--enable-daily=yes \
 		--enable-hourly=yes \
 		--enable-monthly=yes \
-		--enable-persistent=no \
+		--enable-persistent=yes \
 		--enable-weekly=yes \
 		--enable-yearly=no
 }
