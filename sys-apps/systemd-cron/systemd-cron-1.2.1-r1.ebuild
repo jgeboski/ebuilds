@@ -28,10 +28,13 @@ src_configure() {
 		--docdir=/usr/share/doc/${PF} \
 		--libdir=/usr/$(get_libdir) \
 		--runparts=/bin/run-parts \
-		--enable-daily \
-		--enable-hourly \
-		--enable-monthly \
-		--enable-weekly
+		--enable-boot=no \
+		--enable-daily=yes \
+		--enable-hourly=yes \
+		--enable-monthly=yes \
+		--enable-persistent=no \
+		--enable-weekly=yes \
+		--enable-yearly=no
 }
 
 pkg_postinst() {
