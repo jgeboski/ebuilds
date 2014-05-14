@@ -33,3 +33,9 @@ src_configure() {
 		--enable-monthly \
 		--enable-weekly
 }
+
+pkg_postinst() {
+	elog "For ${PN} to work, it must be enabled/started:"
+	elog "  # systemctl enable cron.target"
+	elog "  # systemctl start cron.target"
+}
