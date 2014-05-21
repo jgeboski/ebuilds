@@ -14,12 +14,16 @@ SRC_URI="https://www.kernel.org/pub/linux/kernel/v${MAJOR}.x/linux-${PV}.tar.xz"
 
 LICENSE="freedist GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="custom-cflags"
 
 RESTRICT="strip"
 QA_WX_LOAD="usr/bin/linux"
 S="${WORKDIR}/linux-${PV}"
+
+pkg_pretend() {
+	use amd64 || die "Unsupported system architecture"
+}
 
 pkg_setup() {
 	use custom-cflags || strip-flags
