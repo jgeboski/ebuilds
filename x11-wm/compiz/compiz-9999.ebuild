@@ -96,6 +96,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch "${FILESDIR}/${PN}-0.9.10-fix-po-headers.patch"
 	epatch "${FILESDIR}/${PN}-0.9.10-sandbox.patch"
 
 	echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
