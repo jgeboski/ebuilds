@@ -107,6 +107,11 @@ src_prepare() {
 	  compizconfig/ccsm/ccm/Constants.py.in
 
 	sed -i 's/\(Compiz;\)/X-\1/g' compizconfig/ccsm/ccsm.desktop.in
+
+	# Fix missing Language headers
+	for file in $(ls -1 po/*.po); do
+		msgcat --lang="$(basename "${file}" .po)" -o "${file}" "${file}"
+	done
 }
 
 src_configure() {
