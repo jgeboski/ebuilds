@@ -1,11 +1,14 @@
---- deadbeef.desktop.in.orig	2013-12-08 16:34:09.000000000 -0500
-+++ deadbeef.desktop.in	2014-02-07 17:06:19.270286167 -0500
-@@ -13,29 +13,3 @@
+diff --git a/deadbeef.desktop.in b/deadbeef.desktop.in
+index a0bb7dc..183c7d7 100644
+--- a/deadbeef.desktop.in
++++ b/deadbeef.desktop.in
+@@ -13,50 +13,3 @@ Terminal=false
  Type=Application
  Icon=deadbeef
  X-PulseAudio-Properties=media.role=music
 -
 -X-Ayatana-Desktop-Shortcuts=Play;Pause;Stop;Next;Prev
+-
 -[Play Shortcut Group]
 -Name=Play
 -Exec=deadbeef --play
@@ -30,3 +33,23 @@
 -Name=Prev
 -Exec=deadbeef --prev
 -TargetEnvironment=Unity
+-
+-[Desktop Action Play]
+-Name=Play
+-Exec=deadbeef --play
+-
+-[Desktop Action Pause]
+-Name=Pause
+-Exec=deadbeef --pause
+-
+-[Desktop Action Stop]
+-Name=Stop
+-Exec=deadbeef --stop
+-
+-[Desktop Action Next]
+-Name=Next
+-Exec=deadbeef --next
+-
+-[Desktop Action Previous]
+-Name=Prev
+-Exec=deadbeef --prev
