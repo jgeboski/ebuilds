@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND=">=net-irc/znc-1.0"
+RDEPEND=">=net-irc/znc-1.5"
 DEPEND="${RDEPEND}"
 
 src_compile() {
