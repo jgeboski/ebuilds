@@ -24,17 +24,17 @@ src_configure() {
 	./configure \
 		--prefix=/usr \
 		--confdir=/etc \
-		--datadir=/usr/share \
 		--docdir=/usr/share/doc/${PF} \
 		--libdir=/usr/$(get_libdir) \
 		--runparts=/bin/run-parts \
-		--enable-boot=no \
+		--statedir=/var \
+		--enable-boot=yes \
 		--enable-daily=yes \
 		--enable-hourly=yes \
 		--enable-monthly=yes \
 		--enable-persistent=yes \
 		--enable-weekly=yes \
-		--enable-yearly=no
+		--enable-yearly=yes
 }
 
 pkg_postinst() {
