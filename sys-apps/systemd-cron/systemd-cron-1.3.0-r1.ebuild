@@ -3,8 +3,10 @@
 # $Header: $
 
 EAPI=5
+PYTHON_DEPEND="2"
+RESTRICT_PYTHON_ABIS="3.*"
 
-inherit multilib
+inherit eutils multilib python
 
 DESCRIPTION="systemd units providing cron directory functionality"
 HOMEPAGE="https://github.com/dbent/systemd-cron"
@@ -15,10 +17,23 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
+DEPEND="sys-process/cronbase:="
 RDEPEND="
 	>=sys-apps/systemd-212
 	sys-apps/debianutils
-	sys-process/cronbase"
+	${DEPEND}"
+
+# The crontab directory
+CRONTAB_DIR="/var/spool/cron/crontabs"
+
+pkg_setup() {
+	python_set_active_version 2
+}
+
+src_prepare() {
+	epatch "${FILESDIR}/${P}-path-fixes.patch"
+	default
+}
 
 src_configure() {
 	./configure \
@@ -41,4 +56,12 @@ pkg_postinst() {
 	elog "For ${PN} to work, it must be enabled/started:"
 	elog "  # systemctl enable cron.target"
 	elog "  # systemctl start cron.target"
+
+	# Make the CRONTAB_DIR group writable
+	chmod g+w "${CRONTAB_DIR}"
+}
+
+pkg_postrm() {
+	# Remove the CRONTAB_DIR group writable
+	chmod g-w "${CRONTAB_DIR}"
 }
