@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
-PYTHON_DEPEND="2:2.6"
+EAPI="5"
 
-inherit gnome2-utils multilib python waf-utils
+inherit eutils gnome2-utils multilib waf-utils
 
 DESCRIPTION="Plugin for Thunar that adds context-menu items from dropbox"
 HOMEPAGE="http://softwarebakery.com/maato/thunar-dropbox.html"
@@ -25,12 +24,9 @@ DEPEND="
 	${RDEPEND}
 	virtual/pkgconfig"
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
-
 src_prepare() {
+	epatch_user
+
 	sed \
 		-e "s;gtk-update-icon-cache;true;" \
 		-e "s;/lib/;/$(get_libdir)/;" \

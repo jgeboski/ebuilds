@@ -87,6 +87,7 @@ pkg_pretend() {
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-desktop-cleanup.patch"
+	epatch_user
 
 	if use midi ; then
 		tmpath="/usr/share/timidity/freepats/timidity.cfg"

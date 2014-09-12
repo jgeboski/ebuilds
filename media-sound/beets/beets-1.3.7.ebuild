@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI="5"
-
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="sqlite"
 

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI="5"
 
 inherit eutils gnome2-utils unpacker
 
@@ -30,6 +30,7 @@ src_unpack() {
 src_prepare() {
 	epatch "${FILESDIR}/${P}-fix-syntax-errors.patch"
 	epatch "${FILESDIR}/${P}-customizer-variables.patch"
+	epatch_user
 
 	MAINDIR="AwOken"
 

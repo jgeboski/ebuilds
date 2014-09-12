@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI="5"
 
-inherit unpacker
+inherit eutils unpacker
 
 DESCRIPTION="Slick and simple dark GTK2/3 theme"
 HOMEPAGE="http://nale12.deviantart.com/art/Boje-1-2-1-342853818"
@@ -37,6 +37,7 @@ src_unpack() {
 }
 
 src_prepare() {
+	epatch_user
 	MAINDIR="Boje-Greyscale"
 
 	for dir in $(find -path './*' -maxdepth 1 -type d ! -iname ${MAINDIR}); do

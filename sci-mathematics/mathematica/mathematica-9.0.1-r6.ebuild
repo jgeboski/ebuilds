@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI="5"
 
 inherit eutils fdo-mime gnome2-utils multilib unpacker
 
@@ -62,6 +62,8 @@ src_unpack() {
 }
 
 src_prepare() {
+	epatch_user
+
 	find Unix/Files -maxdepth 1 -depth -type d \
 		\( \
 			-name "*.Linux$(use amd64 || echo -x86-64)" -o \

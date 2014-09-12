@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
-PYTHON_DEPEND="2"
-RESTRICT_PYTHON_ABIS="3.*"
+EAPI="5"
+PYTHON_COMPAT=( python2_7 )
 
-inherit bash-completion-r1 distutils git-2 python
+inherit bash-completion-r1 distutils-r1 git-2
 
 DESCRIPTION="Minecraft server controller"
 HOMEPAGE="https://github.com/jgeboski/mctl"
@@ -17,23 +16,13 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND="dev-python/setuptools"
-DEPEND="${RDEPEND}"
+RDEPEND=""
+DEPEND=""
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
+DOCS=( config.json README )
 
-src_install() {
-	distutils_src_install
-
-	dodoc config.json README
+python_install_all() {
+	distutils-r1_python_install_all
 	doman man/${PN}{,-fake}.1
-
 	dobashcomp scripts/completion/${PN}{,-fake}
-}
-
-pkg_postinst() {
-	distutils_pkg_postinst
 }

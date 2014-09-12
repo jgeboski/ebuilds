@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
-PYTHON_DEPEND="2"
-RESTRICT_PYTHON_ABIS="3.*"
+EAPI="5"
+PYTHON_COMPAT=( python{2_6,2_7} )
 
-inherit eutils multilib python
+inherit eutils multilib python-single-r1 python-utils-r1
 
 DESCRIPTION="systemd units providing cron directory functionality"
 HOMEPAGE="https://github.com/dbent/systemd-cron"
@@ -19,20 +18,18 @@ IUSE=""
 
 DEPEND="sys-process/cronbase:="
 RDEPEND="
+	${DEPEND}
 	>=sys-apps/systemd-212
-	sys-apps/debianutils
-	${DEPEND}"
+	sys-apps/debianutils"
 
 # The crontab directory
 CRONTAB_DIR="/var/spool/cron/crontabs"
 
-pkg_setup() {
-	python_set_active_version 2
-}
-
 src_prepare() {
 	epatch "${FILESDIR}/${P}-path-fixes.patch"
-	default
+	epatch_user
+
+	python_fix_shebang src/bin
 }
 
 src_configure() {
