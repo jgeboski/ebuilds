@@ -7,8 +7,8 @@ EAPI="5"
 inherit multilib
 
 DESCRIPTION="systemd units providing cron directory functionality"
-HOMEPAGE="https://github.com/dbent/systemd-cron"
-SRC_URI="https://github.com/dbent/systemd-cron/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/systemd-cron/systemd-cron"
+SRC_URI="https://github.com/systemd-cron/systemd-cron/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"

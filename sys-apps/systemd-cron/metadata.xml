@@ -7,11 +7,7 @@
   </maintainer>
   <description>systemd units providing cron directory functionality</description>
   <upstream>
-    <maintainer status="active">
-      <name>Dwayne Bent</name>
-      <email>dbb@dbb.io</email>
-    </maintainer>
-    <bugs-to>https://github.com/dbent/systemd-cron/issues</bugs-to>
-    <remote-id type="github">dbent/systemd-cron</remote-id>
+    <bugs-to>https://github.com/systemd-cron/systemd-cron/issues</bugs-to>
+    <remote-id type="github">systemd-cron/systemd-cron</remote-id>
   </upstream>
 </pkgmetadata>
