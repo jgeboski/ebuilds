@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer>
+    <name>James Geboski</name>
+    <email>jgeboski@gmail.com</email>
+  </maintainer>
+  <upstream>
+    <maintainer status="active">
+      <name>Matt Martz</name>
+      <email>matt@sivel.net</email>
+    </maintainer>
+    <bugs-to>https://github.com/sivel/speedtest-cli/issues</bugs-to>
+    <remote-id type="github">sivel/speedtest-cli</remote-id>
+  </upstream>
+</pkgmetadata>
