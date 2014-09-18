@@ -24,6 +24,7 @@ IUSE="doc test ${PLUGINS}"
 RDEPEND="
 	>=dev-python/python-musicbrainz-ngs-0.4[${PYTHON_USEDEP}]
 	>=media-libs/mutagen-1.22[${PYTHON_USEDEP}]
+	dev-python/discogs-client:2
 	dev-python/enum34[${PYTHON_USEDEP}]
 	dev-python/munkres[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
@@ -51,7 +52,7 @@ DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]"
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-fix-bashcomp-warning.patch"
+	epatch "${FILESDIR}/${PN}-1.3.7-fix-bashcomp-warning.patch"
 	epatch_user
 
 	for plugin in ${PLUGINS}; do
@@ -60,7 +61,7 @@ src_prepare() {
 		fi
 
 		rm -rf \
-			beetsplug/${plugin}{.py,}
+			beetsplug/${plugin}{.py,} \
 			test/test_${plugin}.py
 
 		sed -i "/beetsplug.${plugin}/d" setup.py
