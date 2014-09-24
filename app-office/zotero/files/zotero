@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -z "$XULRUNNER" ]; then
+	for XULRUNNER in firefox seamonkey; do
+		XULRUNNER=$(which $XULRUNNER 2>/dev/null)
+		[ -n "$XULRUNNER" ] && break
+	done
+
+	if [ -z "$XULRUNNER" ]; then
+		echo "Failed to locate \$XULRUNNER!" 1>&2
+		exit 1
+	fi
+fi
+
+"$XULRUNNER" -app "@appini@"
