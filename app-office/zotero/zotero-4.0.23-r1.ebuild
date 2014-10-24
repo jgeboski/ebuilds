@@ -20,10 +20,10 @@ DEPEND=""
 RDEPEND="
 	sys-apps/which
 	|| (
-		www-client/firefox
-		www-client/firefox-bin
-		www-client/seamonkey
-		www-client/seamonkey-bin
+		<www-client/firefox-34.0
+		<www-client/firefox-bin-34.0
+		<www-client/seamonkey-2.31
+		<www-client/seamonkey-bin-2.31
 	)"
 
 DOCS=( README.md )
