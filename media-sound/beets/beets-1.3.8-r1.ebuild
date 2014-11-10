@@ -6,7 +6,7 @@ EAPI="5"
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="sqlite"
 
-inherit bash-completion-r1 distutils-r1 eutils
+inherit bash-completion-r1 distutils-r1 eutils python-r1
 
 DESCRIPTION="A media library management system for obsessive-compulsive music geeks"
 HOMEPAGE="http://beets.radbox.org"
@@ -68,7 +68,9 @@ src_prepare() {
 	done
 
 	use bpd || rm -f test/test_player.py
-	echo "eval \"\$(beet completion)\"" > extra/beets-bashcomp
+
+	python_export_best
+	"${EPYTHON}" ./beet completion > extra/beet-bashcomp
 }
 
 python_compile_all() {
@@ -82,7 +84,7 @@ python_test() {
 
 python_install_all() {
 	distutils-r1_python_install_all
-	newbashcomp extra/beets-bashcomp beets
+	newbashcomp extra/beet-bashcomp beet
 
 	doman docs/_build/man/*
 	use doc && dohtml -r docs/_build/html
