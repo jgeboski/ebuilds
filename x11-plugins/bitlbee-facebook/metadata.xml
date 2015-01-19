@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer>
+    <name>James Geboski</name>
+    <email>jgeboski@gmail.com</email>
+  </maintainer>
+  <description>Facebook protocol plugin for BitlBee</description>
+  <upstream>
+    <maintainer status="active">
+      <name>James Geboski</name>
+      <email>jgeboski@gmail.com</email>
+    </maintainer>
+    <bugs-to>https://github.com/jgeboski/bitlbee-facebook/issues</bugs-to>
+    <remote-id type="github">jgeboski/bitlbee-facebook</remote-id>
+  </upstream>
+</pkgmetadata>
