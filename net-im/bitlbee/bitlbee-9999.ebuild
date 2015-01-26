@@ -5,20 +5,11 @@
 EAPI="5"
 PYTHON_COMPAT=( python{2_6,2_7} )
 
-inherit eutils multilib python-single-r1 systemd user
+inherit eutils git-2 multilib python-single-r1 systemd user
 
 DESCRIPTION="IRC to IM gateway that support multiple IM protocols"
 HOMEPAGE="http://www.bitlbee.org/"
-SRC_URI=""
-
-if [ -n "${EGIT_BRANCH}" ]; then
-	inherit git-2
-	EGIT_MASTER="develop"
-	EGIT_REPO_URI="https://github.com/dequis/bitlbee.git"
-else
-	inherit bzr
-	EBZR_REPO_URI="http://code.bitlbee.org/bitlbee/"
-fi
+EGIT_REPO_URI="https://github.com/bitlbee/bitlbee.git"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -35,8 +26,8 @@ COMMON_DEPEND="
 	!gnutls? (
 		nss? ( dev-libs/nss )
 		!nss? ( ssl? ( dev-libs/openssl ) )
-	)
-	"
+	)"
+
 DEPEND="
 	${COMMON_DEPEND}
 	app-text/xmlto
