@@ -14,8 +14,8 @@ EGIT_REPO_URI="https://github.com/bitlbee/bitlbee.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug gnutls ipv6 +jabber libevent msn nss +oscar otr +plugins purple
-      selinux skype ssl test twitter +yahoo xinetd"
+IUSE="debug doc gnutls ipv6 +jabber libevent msn nss +oscar otr +plugins
+      purple selinux skype ssl test twitter +yahoo xinetd"
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.14
@@ -30,9 +30,11 @@ COMMON_DEPEND="
 
 DEPEND="
 	${COMMON_DEPEND}
-	app-text/xmlto
-	dev-libs/libxslt
 	virtual/pkgconfig
+	doc? (
+		app-text/xmlto
+		dev-libs/libxslt
+	)
 	selinux? ( sec-policy/selinux-bitlbee )
 	skype? ( app-text/asciidoc )
 	test? ( dev-libs/check )"
@@ -60,6 +62,8 @@ pkg_setup() {
 src_prepare() {
 	epatch_user
 	python_fix_shebang utils/convert_purple.py
+
+	use doc   || epatch "${FILESDIR}/bitlbee-disable-docs.patch"
 	use skype && python_fix_shebang protocols/skype/skyped.py
 }
 
@@ -110,26 +114,28 @@ src_configure() {
 
 src_compile() {
 	emake
-	emake -C doc/user-guide
+	use doc && emake -C doc/user-guide
 }
 
 src_install() {
 	emake \
 		install \
 		install-dev \
-		install-doc \
 		install-etc \
 		install-systemd \
 		DESTDIR="${D}"
+
+	if use doc; then
+		dodoc  doc/user-guide/*.txt
+		dohtml doc/user-guide/*.html
+	fi
 
 	keepdir /var/lib/bitlbee
 	fperms  0700 /var/lib/bitlbee
 	fowners bitlbee:bitlbee /var/lib/bitlbee
 
-	dodoc  doc/{AUTHORS,CHANGES,CREDITS,FAQ,README}
-	dodoc  doc/user-guide/user-guide.txt
-	dohtml doc/user-guide/*.html
-	doman  doc/bitlbee.8 doc/bitlbee.conf.5
+	dodoc doc/{AUTHORS,CHANGES,CREDITS,FAQ,README}
+	doman doc/bitlbee.8 doc/bitlbee.conf.5
 
 	newinitd "${FILESDIR}/bitlbee.initd-r1" bitlbee
 	newconfd "${FILESDIR}/bitlbee.confd-r1" bitlbee
@@ -139,7 +145,7 @@ src_install() {
 	newexe utils/bitlbee-ctl.pl    bitlbee-ctl.pl
 
 	if use skype; then
-		newdoc protocols/skype/NEWS NEWS-skype
+		newdoc protocols/skype/NEWS   NEWS-skype
 		newdoc protocols/skype/README README-skype
 	fi
 
