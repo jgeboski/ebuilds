@@ -30,6 +30,7 @@ COMMON_DEPEND="
 
 DEPEND="
 	${COMMON_DEPEND}
+	|| ( www-client/links www-client/lynx virtual/w3m )
 	app-text/xmlto
 	dev-libs/libxslt
 	virtual/pkgconfig
