@@ -24,7 +24,7 @@ RDEPEND="
 	>=xfce-base/libxfce4util-4.9
 	>=xfce-base/xfce4-panel-4.11
 	>=xfce-base/xfconf-4.6
-	keybinder? ( dev-libs/keybinder:0 )"
+	keybinder? ( dev-libs/keybinder:3 )"
 
 DEPEND="
 	${RDEPEND}
