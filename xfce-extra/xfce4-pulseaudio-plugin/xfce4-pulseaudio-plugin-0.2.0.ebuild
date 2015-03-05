@@ -8,7 +8,6 @@ inherit xfconf
 
 DESCRIPTION="A panel plugin for Xfce for controlling an audiooutput volume of the PulseAudio mixer"
 HOMEPAGE="http://goodies.xfce.org/projects/panel-plugins/xfce4-pulseaudio-plugin"
-SRC_URI="mirror://xfce/src/apps/${PN}/${PV%.*}/${P}.tar.bz2"
 SRC_URI="http://archive.xfce.org/src/panel-plugins/${PN}/${PV%.*}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
