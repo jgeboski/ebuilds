@@ -20,17 +20,41 @@ DEPEND="$(unpacker_src_uri_depends)"
 RESTRICT="binchecks fetch strip"
 S="${WORKDIR}/nouveGnomeGray"
 
+MY_SIZES=("scalable")
+
+for size in {16,22,24,32,48,128,256}; do
+	MY_SIZES+=("${size}x${size}")
+done
+
 pkg_nofetch() {
 	elog "Please download ${A} from ${HOMEPAGE} and place it in ${DISTDIR}"
 }
 
+src_prepare() {
+	LINKS=(
+		"apps/gvim->vim"
+		"apps/nvidia-drivers-settings->nvidia-settings"
+		"apps/qtconfig->qtconfig-qt4"
+		"apps/speedcrunch->accessories-calculator"
+	)
+
+	for size in ${MY_SIZES[@]}; do
+		ext=$([ "${size}" == "scalable" ] && echo svg || echo png)
+
+		for link in ${LINKS[@]}; do
+			link=(${link/->/ })
+			file="${size}/$(dirname ${link[0]})/${link[1]}.${ext}"
+
+			if [ -e "${file}" ]; then
+				ln -sf "${link[1]}.${ext}" "${size}/${link[0]}.${ext}"
+			fi
+		done
+	done
+}
+
 src_install() {
 	insinto /usr/share/icons/nouveGnomeGray
-	doins -r Extra scalable index.theme
-
-	for size in {16,22,24,32,48,128,256}; do
-		doins -r "${size}x${size}"
-	done
+	doins -r ${MY_SIZES[@]} Extra index.theme
 
 	dodoc AUTHORS README
 }
