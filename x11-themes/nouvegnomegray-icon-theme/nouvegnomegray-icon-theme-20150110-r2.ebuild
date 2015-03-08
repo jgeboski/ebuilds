@@ -17,6 +17,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="$(unpacker_src_uri_depends)"
+RDEPEND="
+	x11-themes/gnome-icon-theme
+	x11-themes/gnome-icon-theme-symbolic"
+
 RESTRICT="binchecks fetch strip"
 S="${WORKDIR}/nouveGnomeGray"
 
