@@ -4,6 +4,8 @@
 
 EAPI="5"
 
+inherit eutils
+
 DESCRIPTION="An elegant GTK2, GTK3, and GNOME theme"
 HOMEPAGE="https://github.com/horst3180/Vertex-theme"
 SRC_URI="https://github.com/horst3180/Vertex-theme/archive/${PV}.tar.gz -> ${P}.tar.gz"
@@ -20,6 +22,9 @@ RESTRICT="binchecks strip"
 S="${WORKDIR}/Vertex-theme-${PV}"
 
 src_prepare() {
+	# Fix xfce4-panel buttons
+	epatch "${FILESDIR}/${P}-fix-flashback-xfce-panel.patch"
+
 	# Prevent unnecessary zipping
 	sed -i "/^zip/d" build.sh
 }
