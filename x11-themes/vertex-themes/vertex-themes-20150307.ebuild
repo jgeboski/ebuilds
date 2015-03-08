@@ -3,11 +3,10 @@
 # $Header: $
 
 EAPI="5"
-MY_PV="20150208-1"
 
 DESCRIPTION="An elegant GTK2, GTK3, and GNOME theme"
 HOMEPAGE="https://github.com/horst3180/Vertex-theme"
-SRC_URI="https://github.com/horst3180/Vertex-theme/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/horst3180/Vertex-theme/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -18,7 +17,7 @@ RDEPEND="x11-themes/gtk-engines-murrine"
 DEPEND="${RDEPEND}"
 
 RESTRICT="binchecks strip"
-S="${WORKDIR}/Vertex-theme-${MY_PV}"
+S="${WORKDIR}/Vertex-theme-${PV}"
 
 src_prepare() {
 	# Prevent unnecessary zipping
