@@ -9,7 +9,7 @@ inherit gnome2-utils unpacker
 
 DESCRIPTION="Light gray icon set for GNOME"
 HOMEPAGE="http://tsujan.deviantart.com/art/nouveGnomeGray-300365158"
-SRC_URI="nouvegnomegray_by_tsujan-${MY_PV}.7z"
+SRC_URI="http://fc01.deviantart.net/fs71/f/2015/010/9/b/nouvegnomegray_by_tsujan-${MY_PV}.7z"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,7 +21,7 @@ RDEPEND="
 	x11-themes/gnome-icon-theme
 	x11-themes/gnome-icon-theme-symbolic"
 
-RESTRICT="binchecks fetch strip"
+RESTRICT="binchecks strip"
 S="${WORKDIR}/nouveGnomeGray"
 
 MY_SIZES=("scalable")
@@ -29,10 +29,6 @@ MY_SIZES=("scalable")
 for size in {16,22,24,32,48,128,256}; do
 	MY_SIZES+=("${size}x${size}")
 done
-
-pkg_nofetch() {
-	elog "Please download ${A} from ${HOMEPAGE} and place it in ${DISTDIR}"
-}
 
 src_prepare() {
 	LINKS=(
