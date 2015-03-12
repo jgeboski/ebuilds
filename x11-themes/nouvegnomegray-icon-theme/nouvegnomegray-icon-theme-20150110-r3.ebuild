@@ -31,25 +31,28 @@ for size in {16,22,24,32,48,128,256}; do
 done
 
 src_prepare() {
-	LINKS=(
-		"apps/gvim->vim"
-		"apps/nvidia-drivers-settings->nvidia-settings"
-		"apps/qtconfig->qtconfig-qt4"
-		"apps/speedcrunch->accessories-calculator"
-	)
+	while read line; do
+		link=(${line/->/ })
+		path=($(echo "${link[@]}" | xargs -n1 dirname))
+		name=($(echo "${link[@]}" | xargs -n1 basename))
 
-	for size in ${MY_SIZES[@]}; do
-		ext=$([ "${size}" == "scalable" ] && echo svg || echo png)
+		if [ "${#link[@]}" != "2" ]; then
+			continue
+		fi
 
-		for link in ${LINKS[@]}; do
-			link=(${link/->/ })
-			file="${size}/$(dirname ${link[0]})/${link[1]}.${ext}"
+		[ "${path[1]}" == "." ]
+		dirc=${path[$?]}
 
-			if [ -e "${file}" ]; then
-				ln -sf "${link[1]}.${ext}" "${size}/${link[0]}.${ext}"
+		for size in ${MY_SIZES[@]}; do
+			file=$(find "${size}/${dirc}" -name "${name[1]}.*" | head -1)
+			dirp=$([ "${path[1]}" == "." ] || echo "../")
+			ext=${file##*.}
+
+			if [ -n "${file}" ]; then
+				ln -sf "${dirp}${link[1]}.${ext}" "${size}/${link[0]}.${ext}"
 			fi
 		done
-	done
+	done < "${FILESDIR}/additional-symlinks-${PV}"
 }
 
 src_install() {
