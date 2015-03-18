@@ -24,6 +24,7 @@ S="${WORKDIR}/Vertex-theme-${PV}"
 src_prepare() {
 	# Fix xfce4-panel buttons
 	epatch "${FILESDIR}/${P}-fix-flashback-xfce-panel.patch"
+	epatch "${FILESDIR}/${P}-fix-xfce-panel-alpha.patch"
 
 	# Prevent unnecessary zipping
 	sed -i "/^zip/d" build.sh
