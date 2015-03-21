@@ -17,7 +17,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=""
-DEPEND=""
+DEPEND="
+	${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]"
 
 DOCS=( CONTRIBUTING.md README.rst )
 
