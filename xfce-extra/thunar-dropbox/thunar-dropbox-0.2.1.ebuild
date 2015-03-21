@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="
-	>=xfce-base/thunar-1.2
+	>=xfce-base/thunar-1.1
 	dev-libs/glib:2
 	net-misc/dropbox"
 
