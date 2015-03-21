@@ -20,7 +20,9 @@ RDEPEND="
 	dev-python/oauth2[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]"
 
-DEPEND="${RDEPEND}"
+DEPEND="
+	${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]"
 
 DOCS=( README.mkd )
 S="${WORKDIR}"/${P/-/_}
