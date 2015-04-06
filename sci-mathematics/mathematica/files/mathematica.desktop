@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Mathematica
+Comment=Technical Computing System
+Type=Application
+Exec=mathematica %F
+Icon=mathematica
+Categories=Science;Education;
+MimeType=application/mathematica;application/mathematicaplayer;application/vnd.wolfram.cdf;
