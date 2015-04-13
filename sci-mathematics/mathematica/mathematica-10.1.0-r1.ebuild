@@ -148,7 +148,7 @@ src_prepare() {
 			\) \
 		\) -exec rm -rf '{}' \;
 
-	use doc || find -name Documentation -exec rm -rf '{}' \;
+	use doc || find -depth -name Documentation -exec rm -rf '{}' \;
 
 	# Hackery for non-mesa libGLs
 	sed -i \
