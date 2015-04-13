@@ -150,6 +150,12 @@ src_prepare() {
 
 	use doc || find -name Documentation -exec rm -rf '{}' \;
 
+	# Hackery for non-mesa libGLs
+	sed -i \
+		-e "s/libMesaGL.so.1/libGL.so.1\x00\x00\x00\x00/g" \
+		SystemFiles/FrontEnd/Binaries/${MY_ARCH}/gltest \
+		SystemFiles/FrontEnd/Binaries/${MY_ARCH}/Mathematica
+
 	(
 		cd SystemFiles/Libraries/${MY_ARCH}
 		ln -sf /usr/$(get_libdir)/libaspell.so libaspell.so.1
