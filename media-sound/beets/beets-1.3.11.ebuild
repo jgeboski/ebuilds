@@ -12,19 +12,18 @@ DESCRIPTION="A media library management system for obsessive-compulsive music ge
 HOMEPAGE="http://beets.radbox.org"
 SRC_URI="https://github.com/sampsyo/beets/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
-PLUGINS="
+MY_PLUGINS="
 	beatport bpd chroma convert discogs echonest echonest_tempo fetchart
-	lastgenre mpdstats replaygain web"
+	lastgenre mpdstats replaygain thumbnails web"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc test ${PLUGINS}"
+IUSE="doc test ${MY_PLUGINS}"
 
 RDEPEND="
 	>=dev-python/python-musicbrainz-ngs-0.4[${PYTHON_USEDEP}]
 	>=media-libs/mutagen-1.22[${PYTHON_USEDEP}]
-	dev-python/discogs-client:2
 	dev-python/enum34[${PYTHON_USEDEP}]
 	dev-python/munkres[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
@@ -45,6 +44,7 @@ RDEPEND="
 		media-sound/mp3gain
 	) )
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )
+	thumbnails? ( dev-python/pyxdg[${PYTHON_USEDEP}] )
 	web? ( dev-python/flask[${PYTHON_USEDEP}] )"
 
 DEPEND="
@@ -55,7 +55,7 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-1.3.7-fix-bashcomp-warning.patch"
 	epatch_user
 
-	for plugin in ${PLUGINS}; do
+	for plugin in ${MY_PLUGINS}; do
 		if use ${plugin}; then
 			continue;
 		fi

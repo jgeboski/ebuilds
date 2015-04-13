@@ -25,6 +25,7 @@
     <flag name="lastgenre">Enable support for importing music genres from last.fm tags</flag>
     <flag name="mpdstats">Enable support for collecting statistic about listening habits from <pkg>media-sound/mpd</pkg></flag>
     <flag name="replaygain">Enable support for Replay Gain metadata calculation during import</flag>
+    <flag name="thumbnails">Enable support for XDG based thumbnails</flag>
     <flag name="web">Enable embedded webserver support through <pkg>dev-python/flask</pkg></flag>
   </use>
 </pkgmetadata>
