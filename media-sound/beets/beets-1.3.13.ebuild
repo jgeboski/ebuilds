@@ -25,9 +25,10 @@ RDEPEND="
 	>=dev-python/python-musicbrainz-ngs-0.4[${PYTHON_USEDEP}]
 	>=media-libs/mutagen-1.22[${PYTHON_USEDEP}]
 	dev-python/enum34[${PYTHON_USEDEP}]
+	dev-python/jellyfish[${PYTHON_USEDEP}]
 	dev-python/munkres[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
-	dev-python/sphinx
+	dev-python/sphinx[${PYTHON_USEDEP}]
 	dev-python/unidecode[${PYTHON_USEDEP}]
 	beatport? ( dev-python/requests[${PYTHON_USEDEP}] )
 	bpd? ( dev-python/bluelet[${PYTHON_USEDEP}] )
