@@ -4,6 +4,8 @@
 
 EAPI="5"
 
+inherit flag-o-matic
+
 DESCRIPTION="Tool to handle local repositories of debian packages."
 HOMEPAGE="https://mirrorer.alioth.debian.org/"
 SRC_URI="https://alioth.debian.org/frs/download.php/file/4109/reprepro_${PV}.orig.tar.gz"
@@ -27,6 +29,8 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 src_configure() {
+	use gpgme && append-cflags -I/usr/include/gpgme
+
 	econf \
 		$(use_with archive libarchive) \
 		$(use_with bzip2   libbz2) \
