@@ -12,7 +12,7 @@ EGIT_REPO_URI="https://gist.github.com/1169540.git"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~*"
 IUSE=""
 
 RDEPEND=">=net-irc/znc-1.5:="

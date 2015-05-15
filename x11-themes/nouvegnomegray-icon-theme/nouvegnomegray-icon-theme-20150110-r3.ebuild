@@ -13,7 +13,7 @@ SRC_URI="http://fc01.deviantart.net/fs71/f/2015/010/9/b/nouvegnomegray_by_tsujan
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~*"
 IUSE=""
 
 DEPEND="$(unpacker_src_uri_depends)"

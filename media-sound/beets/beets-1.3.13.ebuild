@@ -18,7 +18,7 @@ MY_PLUGINS="
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~*"
 IUSE="doc test ${MY_PLUGINS}"
 
 RDEPEND="

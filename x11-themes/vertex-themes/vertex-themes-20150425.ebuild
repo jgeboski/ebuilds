@@ -12,7 +12,7 @@ SRC_URI="https://github.com/horst3180/Vertex-theme/archive/${PV}.tar.gz -> ${P}.
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~*"
 IUSE="ayatana dark gnome gtk2 gtk3 light xfwm"
 
 RDEPEND="

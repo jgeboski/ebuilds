@@ -13,7 +13,7 @@ SRC_URI="http://github.com/sunlightlabs/jellyfish/archive/${PV}.tar.gz -> ${P}.t
 
 LICENSE="BSD-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~*"
 IUSE="doc"
 
 RDEPEND="

@@ -19,7 +19,7 @@ LICENSE="
 	shn? ( shorten )"
 
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~*"
 
 IUSE="
 	+gtk2 aac adplug alac alsa ape cdda converter cover cover-imlib2 curl dts

@@ -13,7 +13,7 @@ EGIT_REPO_URI="https://github.com/jgeboski/mctl.git"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~*"
 IUSE=""
 
 RDEPEND=""

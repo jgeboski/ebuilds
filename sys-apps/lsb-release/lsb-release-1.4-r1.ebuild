@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/lsb/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 s390 sh sparc x86"
+KEYWORDS="*"
 IUSE=""
 
 # Perl isn't needed at runtime, it is just used to generate the man page.

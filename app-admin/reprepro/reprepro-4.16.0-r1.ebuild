@@ -12,7 +12,7 @@ SRC_URI="https://alioth.debian.org/frs/download.php/file/4109/reprepro_${PV}.ori
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~*"
 IUSE="archive bzip2 gpgme lzma"
 
 RDEPEND="
