@@ -5,9 +5,8 @@
 EAPI="5"
 
 PYTHON_COMPAT=( python{3_2,3_3,3_4} )
-HGV="9f4dea11d6eb"
 
-inherit cmake-utils python-single-r1
+inherit cmake-utils python-single-r1 vcs-snapshot
 
 DESCRIPTION="GObject based library that implements a reusable plugin system"
 HOMEPAGE="https://bitbucket.org/rw_grim/gplugin"
@@ -41,8 +40,6 @@ RDEPEND="
 DEPEND="
 	${RDEPEND}
 	nls? ( sys-devel/gettext )"
-
-S="${WORKDIR}/rw_grim-${PN}-${HGV}"
 
 pkg_setup() {
 	if use python; then
