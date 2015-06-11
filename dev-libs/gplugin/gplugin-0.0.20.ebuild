@@ -6,11 +6,11 @@ EAPI="5"
 
 PYTHON_COMPAT=( python{3_2,3_3,3_4} )
 
-inherit cmake-utils python-single-r1 vcs-snapshot
+inherit cmake-utils python-single-r1
 
 DESCRIPTION="GObject based library that implements a reusable plugin system"
-HOMEPAGE="https://bitbucket.org/rw_grim/gplugin"
-SRC_URI="https://bitbucket.org/rw_grim/${PN}/get/v${PV}.tar.bz2 -> ${P}.tar.bz2"
+HOMEPAGE="https://bitbucket.org/gplugin/main"
+SRC_URI="https://bitbucket.org/gplugin/main/downloads/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -47,11 +47,6 @@ pkg_setup() {
 	fi
 }
 
-src_prepare() {
-	epatch "${FILESDIR}/${P}-fix-lua-check.patch"
-	cmake-utils_src_prepare
-}
-
 src_configure() {
 	local mycmakeargs=(
 		$(cmake-utils_use_build gtk GTK3)
@@ -60,8 +55,6 @@ src_configure() {
 		$(cmake-utils_use_build python PYTHON)
 		$(cmake-utils_use nls NLS)
 		$(cmake-utils_use test TESTING_ENABLED)
-		-DBUILD_GJS=NO  # Build failures
-		-DBUILD_SEED=NO # Missing dependency
 	)
 
 	cmake-utils_src_configure
