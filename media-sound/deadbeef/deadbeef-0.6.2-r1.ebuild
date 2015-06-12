@@ -71,7 +71,7 @@ RDEPEND="
 	vorbis? ( media-libs/libvorbis )
 	wavpack? ( media-sound/wavpack )
 	zip? (
-		dev-libs/libzip
+		>=dev-libs/libzip-1.0.0
 		sys-libs/zlib
 	)"
 
@@ -87,6 +87,7 @@ pkg_pretend() {
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-desktop-cleanup.patch"
+	epatch "${FILESDIR}/${P}-libzip-1.0.0.patch"
 	epatch_user
 
 	if use midi ; then
