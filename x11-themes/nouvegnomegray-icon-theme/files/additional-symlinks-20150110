@@ -7,6 +7,7 @@ apps/nm-signal-100 -> status/network-wireless-signal-excellent
 apps/nvidia-drivers-settings -> nvidia-settings
 apps/qtconfig -> qtconfig-qt4
 apps/speedcrunch -> accessories-calculator
+apps/xfce4-power-manager-settings -> gnome-power-manager
 apps/xfpm-hibernate -> system-suspend-hibernate
 apps/xfpm-suspend -> system-suspend
 status/xfpm-brightness-lcd -> display-brightness
