@@ -14,7 +14,7 @@ SRC_URI="https://github.com/sampsyo/beets/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 MY_PLUGINS="
 	beatport bpd chroma convert discogs echonest echonest_tempo fetchart
-	lastgenre mpdstats replaygain thumbnails web"
+	lastgenre lyrics metasync mpdstats replaygain thumbnails web"
 
 LICENSE="MIT"
 SLOT="0"
@@ -22,9 +22,9 @@ KEYWORDS="~*"
 IUSE="doc test ${MY_PLUGINS}"
 
 RDEPEND="
+	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
 	>=dev-python/python-musicbrainz-ngs-0.4[${PYTHON_USEDEP}]
-	>=media-libs/mutagen-1.22[${PYTHON_USEDEP}]
-	dev-python/enum34[${PYTHON_USEDEP}]
+	>=media-libs/mutagen-1.27[${PYTHON_USEDEP}]
 	dev-python/jellyfish[${PYTHON_USEDEP}]
 	dev-python/munkres[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
@@ -34,19 +34,30 @@ RDEPEND="
 	bpd? ( dev-python/bluelet[${PYTHON_USEDEP}] )
 	chroma? ( dev-python/pyacoustid[${PYTHON_USEDEP}] )
 	convert? ( media-video/ffmpeg:0[encode] )
-	discogs? ( dev-python/discogs-client[${PYTHON_USEDEP}] )
+	discogs? ( >=dev-python/discogs-client-2.1.0[${PYTHON_USEDEP}] )
 	echonest? ( dev-python/pyechonest[${PYTHON_USEDEP}] )
 	echonest_tempo? ( dev-python/pyechonest[${PYTHON_USEDEP}] )
 	fetchart? ( dev-python/requests[${PYTHON_USEDEP}] )
 	lastgenre? ( dev-python/pylast[${PYTHON_USEDEP}] )
+	lyrics? ( dev-python/beautifulsoup:4[${PYTHON_USEDEP}] )
+	metasync? ( dev-python/dbus-python[${PYTHON_USEDEP}] )
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
 	replaygain? ( || (
 		media-sound/aacgain
 		media-sound/mp3gain
 	) )
-	test? ( dev-python/nose[${PYTHON_USEDEP}] )
-	thumbnails? ( dev-python/pyxdg[${PYTHON_USEDEP}] )
-	web? ( dev-python/flask[${PYTHON_USEDEP}] )"
+	test? (
+		dev-python/mock[${PYTHON_USEDEP}]
+		dev-python/nose[${PYTHON_USEDEP}]
+	)
+	thumbnails? (
+		dev-python/pathlib[${PYTHON_USEDEP}]
+		dev-python/pyxdg[${PYTHON_USEDEP}]
+	)
+	web? (
+		dev-python/flask[${PYTHON_USEDEP}]
+		dev-python/flask-cors[${PYTHON_USEDEP}]
+	)"
 
 DEPEND="
 	${RDEPEND}
