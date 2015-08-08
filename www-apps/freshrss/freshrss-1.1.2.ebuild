@@ -6,9 +6,11 @@ EAPI="5"
 
 inherit webapp
 
+MY_PV="${PV}-beta"
+
 DESCRIPTION="Lightweight, customizable, and self-hosted RSS feed aggregator"
 HOMEPAGE="http://freshrss.org"
-SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${MY_PV}.tar.gz -> ${MY_PV}.tar.gz"
 
 LICENSE="GPL-3"
 KEYWORDS="~*"
@@ -22,7 +24,7 @@ DEPEND="
 	test? ( dev-php/phpunit )"
 
 need_httpd_cgi
-S="${WORKDIR}/FreshRSS-${PV}"
+S="${WORKDIR}/FreshRSS-${MY_PV}"
 
 src_test() {
 	( cd tests && phpunit . )
