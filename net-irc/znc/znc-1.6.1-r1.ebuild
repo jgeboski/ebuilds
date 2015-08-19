@@ -5,7 +5,7 @@
 EAPI="5"
 
 PYTHON_COMPAT=( python{3_2,3_3,3_4} )
-inherit base python-single-r1 user
+inherit base eutils python-single-r1 user
 
 DESCRIPTION="An advanced IRC Bouncer"
 HOMEPAGE="http://wiki.znc.in/ZNC"
@@ -45,6 +45,11 @@ pkg_setup() {
 	fi
 }
 
+src_prepare() {
+	epatch_user
+	sed -i "s|\(^ExecStart=.*\)|\1 -d /var/lib/znc|" znc.service
+}
+
 src_configure() {
 	econf \
 		$(use_enable debug) \
@@ -55,7 +60,8 @@ src_configure() {
 		$(use_enable sasl cyrus) \
 		$(use_enable ssl openssl) \
 		$(use_enable tcl) \
-		$(use_enable zlib)
+		$(use_enable zlib) \
+		$(use_with daemon systemdsystemunitdir /usr/lib/systemd/system)
 }
 
 src_install() {
