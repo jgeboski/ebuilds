@@ -22,11 +22,11 @@ RDEPEND="
 	>=virtual/jdk-1.6
 	app-accessibility/espeak
 	app-text/aspell
+	dev-cpp/clucene
 	dev-db/sqlite:3
 	dev-libs/glib:2
 	dev-libs/icu
 	dev-libs/libffi
-	dev-libs/libzip
 	dev-libs/openssl
 	media-libs/freetype
 	media-libs/glu
@@ -64,22 +64,23 @@ S="${WORKDIR}"
 
 MY_PV="${PV}.0"
 MY_ARCH=Linux$(use amd64 && echo -x86-64)
-CHECKREQS_DISK_BUILD="6G"
+CHECKREQS_DISK_BUILD="7G"
 
 pkg_pretend() {
 	use x86 || use amd64 || die "Unsupported system architecture"
 }
 
-pkg_nofetch() {	elog "Please download ${A} from ${HOMEPAGE} and place it in ${DISTDIR}"
+pkg_nofetch() {
+	elog "Please download ${A} from ${HOMEPAGE} and place it in ${DISTDIR}"
 }
 
 src_unpack() {
-	offset=$(grep -am1 ^offset= "${DISTDIR}/${A}" | awk '{print $3}')
+	skip=$(grep -am1 ^offset= "${DISTDIR}/${A}" | awk '{print $3}')
 	cd "${WORKDIR}"
 
-	if [ -n "$offset" ]; then
-		offset=$(head -n ${offset} "${DISTDIR}/${A}" | wc -c)
-		unpack_makeself "${A}" "${offset}" dd
+	if [ -n "${skip}" ]; then
+		skip=$(head -n "${skip}" "${DISTDIR}/${A}" | wc -c)
+		unpack_makeself "${A}" "${skip}" dd
 	else
 		die "Failed to obtain makeself offset"
 	fi
@@ -100,6 +101,7 @@ src_prepare() {
 			-name '*espeak*' -o \
 			-name 'libaspell*' -o \
 			-name 'libcairo*' -o \
+			-name 'libclucene*' -o \
 			-name 'libcrypto*' -o \
 			-name 'libcurl.so*' -o \
 			-name 'libcv*' -o \
@@ -135,7 +137,6 @@ src_prepare() {
 			-name 'libvorbis*' -o \
 			-name 'libwebp*' -o \
 			-name 'libz.so*' -o \
-			-name 'libzip*' \
 		\) -exec rm -rf '{}' \;
 
 	find -depth \
