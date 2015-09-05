@@ -3,6 +3,6 @@ Version=1.0
 Name=MARS
 Comment=MARS MIPS Simulator
 Type=Application
-Exec=mars %F
+Exec=mars %f
 Icon=mars
 Categories=Development;Education;

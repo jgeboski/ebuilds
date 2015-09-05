@@ -29,7 +29,7 @@ src_unpack() {
 src_prepare() {
 	cat <<-EOF > mars
 	#!/bin/sh
-	java -jar /opt/mars/mars.jar
+	java -jar /opt/mars/mars.jar "\$@"
 	EOF
 }
 
