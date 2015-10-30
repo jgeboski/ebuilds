@@ -64,7 +64,7 @@ S="${WORKDIR}"
 
 MY_PV="${PV}.0"
 MY_ARCH=Linux$(use amd64 && echo -x86-64)
-CHECKREQS_DISK_BUILD="7G"
+CHECKREQS_DISK_BUILD="10G"
 
 pkg_pretend() {
 	use x86 || use amd64 || die "Unsupported system architecture"
@@ -136,7 +136,7 @@ src_prepare() {
 			-name 'libssl*' -o \
 			-name 'libvorbis*' -o \
 			-name 'libwebp*' -o \
-			-name 'libz.so*' -o \
+			-name 'libz.so*' \
 		\) -exec rm -rf '{}' \;
 
 	find -depth \
