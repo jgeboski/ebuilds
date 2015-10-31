@@ -62,7 +62,7 @@ pkg_setup() {
 
 src_prepare() {
 	epatch_user
-	python_fix_shebang doc/genhelp.py utils/convert_purple.py
+	python_fix_shebang doc/user-guide/genhelp.py utils/convert_purple.py
 	sed -i "s:python:${EPYTHON}:" doc/user-guide/Makefile
 	use skype && python_fix_shebang protocols/skype/skyped.py
 }
