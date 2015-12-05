@@ -46,10 +46,6 @@ RDEPEND="
 		media-sound/aacgain
 		media-sound/mp3gain
 	) )
-	test? (
-		dev-python/mock[${PYTHON_USEDEP}]
-		dev-python/nose[${PYTHON_USEDEP}]
-	)
 	thumbnails? (
 		dev-python/pathlib[${PYTHON_USEDEP}]
 		dev-python/pyxdg[${PYTHON_USEDEP}]
@@ -60,8 +56,12 @@ RDEPEND="
 	)"
 
 DEPEND="
-	${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]"
+	dev-python/setuptools[${PYTHON_USEDEP}]
+	test? (
+		${RDEPEND}
+		dev-python/mock[${PYTHON_USEDEP}]
+		dev-python/nose[${PYTHON_USEDEP}]
+	)"
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-1.3.7-fix-bashcomp-warning.patch"
