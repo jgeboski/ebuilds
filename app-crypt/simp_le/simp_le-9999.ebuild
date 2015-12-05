@@ -32,6 +32,8 @@ DEPEND="
 		dev-python/pylint[${PYTHON_USEDEP}]
 	)"
 
+DOCS=( CONTRIBUTING.md README.md )
+
 python_prepare_all() {
 	# Allow other versions of app-crypt/acme
 	sed -ri 's/(acme)==[0-9\.]+/\1/g' setup.py
