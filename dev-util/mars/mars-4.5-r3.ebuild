@@ -6,7 +6,7 @@ EAPI="5"
 MY_PV="${PV/./_}"
 MY_DATE="MARS_${MY_PV}_Aug2014"
 
-inherit gnome2-utils java-pkg-2
+inherit eutils gnome2-utils java-pkg-2
 
 DESCRIPTION="Interactive IDE for programming in MIPS assembly language"
 HOMEPAGE="http://courses.missouristate.edu/KenVollmar/MARS/index.htm"
@@ -31,11 +31,9 @@ src_install() {
 	java-pkg_newjar "${DISTDIR}/Mars${MY_PV}.jar" ${PN}.jar
 	java-pkg_dolauncher
 
-	insinto /usr/share/applications
-	doins "${FILESDIR}/mars.desktop"
-
 	insinto /usr/share/icons/hicolor/64x64/apps
 	doins "${FILESDIR}/mars.png"
+	make_desktop_entry ${PN} MARS "" "" "MimeType=text/x-asm;"
 }
 
 pkg_preinst() {
