@@ -6,7 +6,7 @@ EAPI="5"
 MY_PV="${PV/./_}"
 MY_DATE="MARS_${MY_PV}_Aug2014"
 
-inherit gnome2-utils
+inherit gnome2-utils java-pkg-2
 
 DESCRIPTION="Interactive IDE for programming in MIPS assembly language"
 HOMEPAGE="http://courses.missouristate.edu/KenVollmar/MARS/index.htm"
@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~*"
 IUSE=""
 
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jre-1.5"
 DEPEND=""
 
 S="${WORKDIR}"
@@ -26,17 +26,10 @@ src_unpack() {
 	:;
 }
 
-src_prepare() {
-	cat <<-EOF > mars
-	#!/bin/sh
-	java -jar /opt/mars/mars.jar "\$@"
-	EOF
-}
-
 src_install() {
-	insinto /opt/mars
-	newins "${DISTDIR}/Mars${MY_PV}.jar" mars.jar
-	dobin mars
+	java-pkg_jarinto /opt/${PN}
+	java-pkg_newjar "${DISTDIR}/Mars${MY_PV}.jar" ${PN}.jar
+	java-pkg_dolauncher
 
 	insinto /usr/share/applications
 	doins "${FILESDIR}/mars.desktop"
