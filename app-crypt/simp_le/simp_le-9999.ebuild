@@ -25,9 +25,9 @@ RDEPEND="
 	dev-python/requests[${PYTHON_USEDEP}]"
 
 DEPEND="
-	${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
+		${RDEPEND}
 		dev-python/pep8[${PYTHON_USEDEP}]
 		dev-python/pylint[${PYTHON_USEDEP}]
 	)"
