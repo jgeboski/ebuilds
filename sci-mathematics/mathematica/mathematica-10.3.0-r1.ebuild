@@ -180,12 +180,14 @@ src_prepare() {
 }
 
 src_install() {
-	insinto /usr/share/applications
-	doins "${FILESDIR}/${PN}.desktop"
-
 	insinto /usr/share/mime/application
 	doins Installation/*.xml
 	doman SystemDocumentation/Unix/*.1
+
+	mymts="application/mathematica;"
+	mymts+="application/mathematicaplayer;"
+	mymts+="application/vnd.wolfram.cdf;"
+	make_desktop_entry ${PN} Mathematica "" "" "MimeType=${mymts}"
 
 	for bin in $(ls -1 Executables); do
 		dosym /opt/${PN}/Executables/${bin} /usr/bin/${bin}
