@@ -37,6 +37,7 @@ DOCS=( CONTRIBUTING.md README.rst )
 python_prepare_all() {
 	# Allow other versions of app-crypt/acme
 	sed -ri 's/(acme)==[0-9\.]+/\1/g' setup.py
+	distutils-r1_python_prepare_all
 }
 
 python_test_all() {
