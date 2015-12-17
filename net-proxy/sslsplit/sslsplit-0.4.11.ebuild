@@ -13,13 +13,15 @@ SRC_URI="https://github.com/droe/sslsplit/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="BSD MIT APSL-2"
 SLOT="0"
 KEYWORDS="~*"
-IUSE=""
+IUSE="test"
 
 RDEPEND="
 	>=dev-libs/libevent-2.0
 	dev-libs/openssl"
 
-DEPEND="${RDEPEND}"
+DEPEND="
+	${RDEPEND}
+	test? ( dev-libs/check )"
 
 pkg_pretend() {
 	CONFIG_CHECK="
@@ -35,7 +37,7 @@ src_compile() {
 }
 
 src_test() {
-	FEATURES="" emake test
+	FEATURES="" emake -j1 test
 }
 
 src_install() {
