@@ -27,7 +27,7 @@ need_httpd_cgi
 S="${WORKDIR}/FreshRSS-${MY_PV}"
 
 src_test() {
-	( cd tests && phpunit . )
+	( cd tests && phpunit . ) || die "Testing failed"
 }
 
 src_install() {
