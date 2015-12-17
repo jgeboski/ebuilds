@@ -117,6 +117,14 @@ src_compile() {
 	use doc && emake -C doc/user-guide user-guide
 }
 
+# Testing is broken when libevent is used.
+#
+# https://bugs.gentoo.org/show_bug.cgi?id=546044
+#
+#src_test() {
+#	emake check
+#}
+
 src_install() {
 	emake \
 		install \
