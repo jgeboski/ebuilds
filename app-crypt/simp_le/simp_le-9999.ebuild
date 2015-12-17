@@ -38,3 +38,7 @@ python_prepare_all() {
 	# Allow other versions of app-crypt/acme
 	sed -ri 's/(acme)==[0-9\.]+/\1/g' setup.py
 }
+
+python_test_all() {
+	esetup.py test
+}
