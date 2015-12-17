@@ -81,7 +81,8 @@ src_prepare() {
 
 	use bpd || rm -f test/test_player.py
 
-	python_export_best
+	python_setup
+	python_export EPYTHON
 	"${EPYTHON}" ./beet completion > extra/beet-bashcomp
 }
 
