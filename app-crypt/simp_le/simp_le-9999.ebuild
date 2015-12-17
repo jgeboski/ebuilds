@@ -32,7 +32,7 @@ DEPEND="
 		dev-python/pylint[${PYTHON_USEDEP}]
 	)"
 
-DOCS=( CONTRIBUTING.md README.md )
+DOCS=( CONTRIBUTING.md README.rst )
 
 python_prepare_all() {
 	# Allow other versions of app-crypt/acme
