@@ -1,0 +1,40 @@
+#!/bin/bash
+
+BOOTDIR=${BOOTDIR:-/boot}
+
+JGELIBDIR=${JGELIBDIR:-/usr/share/jgetools}
+source "${JGELIBDIR}/common.sh"
+set -e
+
+jge_require_user root
+
+DEVICE="${1}"
+GRUBDIR="${BOOTDIR}/grub"
+GRUBCFG="${GRUBDIR}/grub.cfg"
+
+if ! [ -e "${GRUBCFG}" ]; then
+    jge_log_error "${GRUBCFG} does not exist"
+fi
+
+BOOTAWK='
+/^#\s*boot\s*=\s*\S+\s*$/ {
+    split($0,a,"=");
+    gsub(/\s+/, "", a[2]);
+    print a[2];
+}'
+
+DEVICE=$(awk "${BOOTAWK}" "${GRUBCFG}")
+
+if [ -z "${DEVICE}" ]; then
+    jge_log_error "${GRUBCFG} is missing line: # boot=<device>"
+fi
+
+if grep -qw 'microcode\.cpio' "${GRUBCFG}"; then
+    cp -a /lib/firmware/microcode.cpio "${BOOTDIR}"
+else
+    rm -f "${BOOTDIR}/microcode.cpio"
+fi
+
+mkdir -p "${GRUBDIR}"
+find "${GRUBDIR}" -depth ! -path "${GRUBDIR}" -a ! -name grub.cfg -delete
+grub-install "${DEVICE}"
