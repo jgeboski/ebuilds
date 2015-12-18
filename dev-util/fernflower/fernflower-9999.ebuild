@@ -13,6 +13,7 @@ EGIT_REPO_URI="https://github.com/JetBrains/intellij-community.git"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~*"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5"
