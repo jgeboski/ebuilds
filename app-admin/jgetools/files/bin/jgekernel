@@ -1,0 +1,118 @@
+#!/bin/bash
+
+MIRROR=${MIRROR:-https://kernel.org/pub/linux/kernel}
+PROPKG=${PROPKG:-sys-kernel/vanilla-sources}
+SRCDIR=${SRCDIR:-/usr/src}
+
+JGELIBDIR=${JGELIBDIR:-/usr/share/jgetools}
+source "${JGELIBDIR}/common.sh"
+set -e
+
+VERSION="${1}"
+MAKEDIR="${SRCDIR}/linux-${VERSION}"
+
+kver() {
+    basename $(eselect kernel show | tail -1) | cut -d- -f2
+}
+
+kusage() {
+    jge_log_error "${1} <version> [upgrade|compile|install|cleanup]..."
+}
+
+kupgrade() {
+    TARFILE="linux-${VERSION}.tar.xz"
+    TARURL="${MIRROR}/v${VERSION%%.*}.x/${TARFILE}"
+
+    wget -cO "${SRCDIR}/${TARFILE}" "${TARURL}"
+    tar xf "${SRCDIR}/${TARFILE}" -C "${SRCDIR}"
+    rm -f "${SRCDIR}/${TARFILE}"
+
+    cp "/boot/config-$(kver)" "${MAKEDIR}/.config"
+    make -C "${MAKEDIR}" oldconfig
+    jge_log_notice "make any configuration changes before compiling"
+}
+
+kcompile() {
+    if ! [ -e "${MAKEDIR}" ]; then
+        jge_log_error "source directory missing"
+    fi
+
+    make -C "${MAKEDIR}" clean
+    make -C "${MAKEDIR}" ${MAKEOPTS}
+}
+
+kinstall() {
+    if ! [ -e "${MAKEDIR}" ]; then
+        jge_log_error "source directory missing"
+    fi
+
+    mkdir -p /boot
+    install -T \
+        "${MAKEDIR}/.config" \
+        "/boot/config-${VERSION}"
+    install -T \
+        "${MAKEDIR}/arch/x86/boot/bzImage" \
+        "/boot/vmlinuz-${VERSION}"
+    install -T \
+        "${MAKEDIR}/System.map" \
+        "/boot/System.map-${VERSION}"
+
+    make -C "${MAKEDIR}" modules_install
+    PROFILE="/etc/portage/profile/package.provided"
+
+    if [ -e "${PROFILE}" ]; then
+        sed -i "\|^${PROPKG}-$(kver)\$|d" "${PROFILE}"
+    fi
+
+    mkdir -p $(dirname "${PROFILE}")
+    echo "${PROPKG}-${VERSION}" >> "${PROFILE}"
+
+    eselect kernel set "linux-${VERSION}"
+    emerge -v1 @module-rebuild
+    jge_log_notice "do not forget to update the bootloader"
+}
+
+kcleanup() {
+    if [ "$(kver)" != "${VERSION}" ]; then
+        jge_log_error "install before cleaning"
+    fi
+
+    find /boot -maxdepth 1 -depth \
+        -type f -a ! -name "*-${VERSION}" -a \
+        \( \
+            -name "config-*" -o \
+            -name "vmlinuz-*" -o \
+            -name "System.map-*" \
+        \) -exec rm -i {} \;
+
+    find /lib/modules -maxdepth 1 -depth \
+        -type d -a \
+            ! -name "${VERSION}" -a \
+            ! -name "modules" \
+        -exec rm -Ir {} \;
+
+    find "${SRCDIR}" -maxdepth 1 -depth \
+        -type d -a \
+            ! -name "linux-${VERSION}" -a \
+            ! -name "src" \
+        -exec rm -Ir {} \;
+}
+
+jge_require_user root
+[ -z "${1}" ] && usage "${0}"
+
+for ACTION in ${@:2}; do
+    case "${ACTION}" in
+        upgrade|compile|install|cleanup) ;;
+        *) kusage "${0}" ;;
+    esac
+done
+
+for ACTION in ${@:2}; do
+    case "${ACTION}" in
+        upgrade) kupgrade ;;
+        compile) kcompile ;;
+        install) kinstall ;;
+        cleanup) kcleanup ;;
+    esac
+done

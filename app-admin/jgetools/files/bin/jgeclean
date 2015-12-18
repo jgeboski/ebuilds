@@ -1,0 +1,16 @@
+#!/bin/bash
+
+JGELIBDIR=${JGELIBDIR:-/usr/share/jgetools}
+source "${JGELIBDIR}/common.sh"
+set -e
+
+jge_require_user root
+jge_require_vars DISTDIR TMPDIR
+
+LOCKCOUNT=$(find "${TMPDIR}" -maxdepth 2 -name "*.portage_lockfile" | wc -l)
+
+if [ "${LOCKCOUNT}" != "0" ]; then
+    jge_log_error "locked directory ${TMPDIR}..."
+fi
+
+rm -rf "${DISTDIR}"/* "${TMPDIR}"/*
