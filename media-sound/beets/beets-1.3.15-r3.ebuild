@@ -13,13 +13,13 @@ HOMEPAGE="http://beets.radbox.org"
 SRC_URI="https://github.com/sampsyo/beets/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 MY_PLUGINS="
-	beatport bpd chroma convert discogs echonest import lastgenre lyrics
-	metasync mpdstats replaygain thumbnails web"
+	beatport bpd chroma convert discogs echonest lastgenre lyrics metasync
+	mpdstats replaygain thumbnails web"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~*"
-IUSE="doc test ${MY_PLUGINS}"
+IUSE="doc rar test ${MY_PLUGINS}"
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -37,11 +37,11 @@ RDEPEND="
 	convert? ( media-video/ffmpeg:0[encode] )
 	discogs? ( >=dev-python/discogs-client-2.1.0[${PYTHON_USEDEP}] )
 	echonest? ( dev-python/pyechonest[${PYTHON_USEDEP}] )
-	import? ( dev-python/rarfile[${PYTHON_USEDEP}] )
 	lastgenre? ( dev-python/pylast[${PYTHON_USEDEP}] )
 	lyrics? ( dev-python/beautifulsoup:4[${PYTHON_USEDEP}] )
 	metasync? ( dev-python/dbus-python[${PYTHON_USEDEP}] )
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
+	rar? ( dev-python/rarfile[${PYTHON_USEDEP}] )
 	replaygain? ( || (
 		media-sound/aacgain
 		media-sound/mp3gain

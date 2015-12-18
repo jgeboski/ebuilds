@@ -19,11 +19,12 @@
     <flag name="chroma">Enable support for acoustic fingerprinting plugin using (<pkg>media-libs/chromaprint</pkg>)</flag>
     <flag name="convert">Enable support for the convert plugin which makes it possible to transcode files</flag>
     <flag name="discogs">Enable support for the discogs API plugin</flag>
-    <flag name="echonest_tempo">Enable support for writing the BPM of a track into its metadata</flag>
     <flag name="echonest">Enable support for fetching and storing acoustic attributes of a track from Echo Nest</flag>
-    <flag name="fetchart">Enable support for fetching the cover art of an album</flag>
     <flag name="lastgenre">Enable support for importing music genres from last.fm tags</flag>
+    <flag name="lyrics">Enable support for fetching song lyrics</flag>
+    <flag name="metasync">Enable support for fetching external external metadata</flag>
     <flag name="mpdstats">Enable support for collecting statistic about listening habits from <pkg>media-sound/mpd</pkg></flag>
+    <flag name="rar">Enable support for importing RAR files</flag>
     <flag name="replaygain">Enable support for Replay Gain metadata calculation during import</flag>
     <flag name="thumbnails">Enable support for XDG based thumbnails</flag>
     <flag name="web">Enable embedded webserver support through <pkg>dev-python/flask</pkg></flag>
