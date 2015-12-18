@@ -51,11 +51,15 @@ kinstall() {
         "${MAKEDIR}/.config" \
         "/boot/config-${VERSION}"
     install -T \
-        "${MAKEDIR}/arch/x86/boot/bzImage" \
-        "/boot/vmlinuz-${VERSION}"
-    install -T \
         "${MAKEDIR}/System.map" \
         "/boot/System.map-${VERSION}"
+    install -T \
+        "${MAKEDIR}/arch/x86/boot/bzImage" \
+        "/boot/vmlinuz-${VERSION}"
+
+    ln -sf "config-${VERSION}" /boot/config
+    ln -sf "System.map-${VERSION}" /boot/System.map
+    ln -sf "vmlinuz-${VERSION}" /boot/vmlinuz
 
     make -C "${MAKEDIR}" modules_install
     PROFILE="/etc/portage/profile/package.provided"
