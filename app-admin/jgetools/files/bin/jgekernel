@@ -47,13 +47,13 @@ kinstall() {
     fi
 
     mkdir -p /boot
-    install -T \
+    install -Tm 0644 \
         "${MAKEDIR}/.config" \
         "/boot/config-${VERSION}"
-    install -T \
+    install -Tm 0644 \
         "${MAKEDIR}/System.map" \
         "/boot/System.map-${VERSION}"
-    install -T \
+    install -Tm 0644 \
         "${MAKEDIR}/arch/x86/boot/bzImage" \
         "/boot/vmlinuz-${VERSION}"
 
