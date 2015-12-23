@@ -103,7 +103,7 @@ kcleanup() {
 }
 
 jge_require_user root
-[ -z "${1}" ] && usage "${0}"
+[ -z "${1}" ] && kusage "${0}"
 
 for ACTION in ${@:2}; do
     case "${ACTION}" in
