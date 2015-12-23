@@ -33,7 +33,7 @@ src_install() {
 		name=$(basename "${bin}" | sed 's/^jge//')
 
 		if ! in_iuse ${name} || use ${name}; then
-			dobin "${bin}"
+			dosbin "${bin}"
 		fi
 	done
 }
