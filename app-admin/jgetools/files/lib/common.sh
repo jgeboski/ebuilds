@@ -12,12 +12,12 @@ PORTAGE_TMPDIR=${PORTAGE_TMPDIR:-/var/tmp}
 TMPDIR="${PORTAGE_TMPDIR}/portage"
 
 jge_log_error() {
-    echo "error: ${@}" >&2
+    echo -e "error: ${@}" >&2
     return 1
 }
 
 jge_log_notice() {
-    echo "!!! ${@} !!!"
+    echo -e "!!! ${@} !!!"
 }
 
 jge_require_user() {

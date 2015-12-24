@@ -1,0 +1,154 @@
+#!/bin/bash
+
+CERTROOT=${CERTROOT:-/etc/ssl/lecerts}
+WWWPATH=${WWWPATH:-${CERTROOT}/www}
+LEUSER=${LEUSER:-lecerts}
+LEGROUP=${LEGROUP:-lecerts}
+
+JGELIBDIR=${JGELIBDIR:-/usr/share/jgetools}
+source "${JGELIBDIR}/common.sh"
+set -e
+
+slecmd() {
+    if ! su -c "cd \"${1}\" && simp_le ${@:2}" - "${LEUSER}"; then
+        return 1
+    fi
+}
+
+leusage() {
+    echo "Usages:" >&2
+    echo "  jgelecerts create <domain> <user> <plugins...>" >&2
+    echo "  jgelecerts revoke <domain>" >&2
+    echo "  jgelecerts update" >&2
+    jge_log_error "invalid command syntax"
+}
+
+led2o() {
+    SLEPLUGINS=(
+        account_key.json
+        cert.der
+        cert.pem
+        chain.der
+        chain.pem
+        external.sh,
+        fullchain.der
+        fullchain.pem
+        key.der
+        key.pem
+    )
+
+    DOMAINDIR="${1}"
+    PLUGINOPTS=""
+
+    for PLUGIN in ${SLEPLUGINS[@]}; do
+        if ! [ -e "${DOMAINDIR}/${PLUGIN}" ]; then
+            continue
+        fi
+
+        if [ -n "${PLUGINOPTS}" ]; then
+            PLUGINOPTS+=" "
+        fi
+
+        PLUGINOPTS+="-f ${PLUGIN}"
+    done
+
+    echo "${PLUGINOPTS}"
+}
+
+lep2o() {
+    PLUGINOPTS=""
+
+    for PLUGIN in ${@}; do
+        if [ -n "${PLUGINOPTS}" ] ; then
+            PLUGINOPTS+=" "
+        fi
+
+        PLUGINOPTS+=" -f ${PLUGIN}"
+    done
+
+    echo "${PLUGINOPTS}"
+}
+
+lecreate() {
+    DOMAIN="${1}"
+    MYUSER="${2}"
+    PLUGINS="${@:3}"
+    DOMAINDIR="${CERTROOT}/${DOMAIN}"
+
+    [ -n "${DOMAIN}" ] && [ -n "${MYUSER}" ] && [ -n "${PLUGINS}" ] || leusage
+    [ -e "${DOMAINDIR}" ] && jge_log_error "${DOMAIN} already exists"
+
+    mkdir -p "${WWWPATH}"
+    chown "${LEUSER}:${LEGROUP}" "${WWWPATH}"
+    chmod 755 "${WWWPATH}"
+
+    mkdir -p "${DOMAINDIR}"
+    chmod 570 "${DOMAINDIR}"
+    chown "${MYUSER}:${LEGROUP}" "${DOMAINDIR}"
+
+    if [ -e "${CERTROOT}/account_key.json" ]; then
+        ln -sf "../account_key.json" "${DOMAINDIR}"
+        EMAIL=""
+    else
+        if [ -z "${EMAIL}" ]; then
+            rm -rf "${DOMAINDIR}"
+            jge_log_error "First time usage requires the EMAIL variable"
+        fi
+
+        EMAIL="--email \"${EMAIL}\""
+    fi
+
+    PLUGINS+=" account_key.json"
+    SLEARGS="${EMAIL} -d \"${DOMAIN}:${WWWPATH}\" $(lep2o ${PLUGINS})"
+
+    if ! slecmd "${DOMAINDIR}" "${SLEARGS}"; then
+        rm -rf "${DOMAINDIR}"
+    fi
+
+    if ! [ -e "${CERTROOT}/account_key.json" ]; then
+        mv "${DOMAINDIR}/account_key.json" ${CERTROOT}
+        chmod 600 "${CERTROOT}/account_key.json"
+        ln -sf "../account_key.json" "${DOMAINDIR}"
+    fi
+}
+
+lerevoke() {
+    DOMAIN="${1}"
+    DOMAINDIR="${CERTROOT}/${DOMAIN}"
+
+    [ -n "${DOMAIN}" ] || leusage
+    [ -e "${DOMAINDIR}" ] || jge_log_error "${DOMAIN} does not exist"
+
+    SLEARGS="--revoke $(led2o ${DOMAINDIR})"
+
+    if slecmd "${DOMAINDIR}" "${SLEARGS}"; then
+        rm -rf "${DOMAINDIR}"
+    fi
+}
+
+leupdate() {
+    DOMAINS=$(find "${CERTROOT}" -maxdepth 1 -type d -name '*.*' -exec basename {} \;)
+    RETVAL=1
+
+    for DOMAIN in ${DOMAINS}; do
+        DOMAINDIR="${CERTROOT}/${DOMAIN}"
+        SLEARGS="-d \"${DOMAIN}:${WWWPATH}\" $(led2o ${DOMAINDIR})"
+
+        if slecmd "${DOMAINDIR}" "${SLEARGS}"; then
+            RETVAL=0
+        fi
+    done
+
+    return ${RETVAL}
+}
+
+jge_require_user root
+
+case "${1}" in
+    create) lecreate "${2}" "${3}" "${@:4}" ;;
+    revoke) lerevoke "${2}" ;;
+    update) leupdate ;;
+    *) leusage ;;
+esac
+
+exit $?
