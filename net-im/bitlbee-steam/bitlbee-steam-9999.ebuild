@@ -13,10 +13,10 @@ EGIT_REPO_URI="https://github.com/jgeboski/bitlbee-steam.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE=""
 
 RDEPEND="
-	>=net-im/bitlbee-3.2.2[plugins]
+	>=net-im/bitlbee-3.4[plugins]
 	>=dev-libs/glib-2.32.0
 	>=dev-libs/libgcrypt-1.5.0"
 DEPEND="
@@ -26,12 +26,6 @@ DEPEND="
 src_prepare() {
 	epatch_user
 	eautoreconf
-}
-
-src_configure() {
-	econf \
-		$(use_enable debug) \
-		--enable-minimal-flags
 }
 
 src_install() {
