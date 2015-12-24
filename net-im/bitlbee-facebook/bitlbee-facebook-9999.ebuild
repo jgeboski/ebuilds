@@ -16,7 +16,7 @@ KEYWORDS=""
 IUSE=""
 
 RDEPEND="
-	>=net-im/bitlbee-3.2.2[plugins]
+	>=net-im/bitlbee-3.4[plugins]
 	>=dev-libs/glib-2.32.0
 	>=dev-libs/json-glib-0.14
 	sys-libs/zlib"
