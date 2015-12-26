@@ -3,13 +3,12 @@
 # $Header: $
 
 EAPI="5"
-MY_PV="d4ytv8m"
 
 inherit gnome2-utils unpacker
 
 DESCRIPTION="Light gray icon set for GNOME"
 HOMEPAGE="http://tsujan.deviantart.com/art/nouveGnomeGray-300365158"
-SRC_URI="http://fc01.deviantart.net/fs71/f/2015/010/9/b/nouvegnomegray_by_tsujan-${MY_PV}.7z"
+SRC_URI="http://orig06.deviantart.net/a542/f/2015/347/6/6/nouvegnomegray_by_tsujan-d4ytv8m.7z"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -58,7 +57,6 @@ src_prepare() {
 src_install() {
 	insinto /usr/share/icons/nouveGnomeGray
 	doins -r ${MY_SIZES[@]} Extra index.theme
-
 	dodoc AUTHORS README
 }
 
