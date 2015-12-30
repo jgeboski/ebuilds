@@ -4,76 +4,127 @@ CERTROOT=${CERTROOT:-/etc/ssl/lecerts}
 WWWPATH=${WWWPATH:-${CERTROOT}/www}
 LEUSER=${LEUSER:-lecerts}
 LEGROUP=${LEGROUP:-lecerts}
+TESTING=${TESTING:-no}
 
 JGELIBDIR=${JGELIBDIR:-/usr/share/jgetools}
 source "${JGELIBDIR}/common.sh"
 set -e
 
-slecmd() {
-    if ! su -c "cd \"${1}\" && simp_le ${@:2}" - "${LEUSER}"; then
-        return 1
-    fi
-}
+SLEPLUGINS=(
+    account_key.json
+    cert.der
+    cert.pem
+    chain.der
+    chain.pem
+    external.sh,
+    fullchain.der
+    fullchain.pem
+    key.der
+    key.pem
+)
 
 leusage() {
     echo "Usages:" >&2
-    echo "  jgelecerts create <domain> <user> <plugins...>" >&2
+    echo "  jgelecerts create <domain> <user> <plugins...> [additional...]" >&2
     echo "  jgelecerts revoke <domain>" >&2
     echo "  jgelecerts update" >&2
     jge_log_error "invalid command syntax"
 }
 
-led2o() {
-    SLEPLUGINS=(
-        account_key.json
-        cert.der
-        cert.pem
-        chain.der
-        chain.pem
-        external.sh,
-        fullchain.der
-        fullchain.pem
-        key.der
-        key.pem
-    )
+slecmd() {
+    SLEARGS="${@:2}"
 
+    if [ "${TESTING}" == "yes" ]; then
+        SLEARGS+=" --server https://acme-staging.api.letsencrypt.org/directory"
+    fi
+
+    echo "simp_le ${SLEARGS}"
+
+    if ! su -c "cd \"${1}\" && simp_le ${SLEARGS}" - "${LEUSER}"; then
+        return 1
+    fi
+}
+
+leisplugin() {
+    PLUGIN="${1}"
+
+    for SLEPLUGIN in ${SLEPLUGINS[@]}; do
+        if [ "${SLEPLUGIN}" == "${PLUGIN}" ]; then
+            return
+        fi
+    done
+
+    return 1
+}
+
+ledomplug() {
+    DOMAINS=()
+    PLUGINS=()
+
+    for ARG in ${@}; do
+        if leisplugin "${ARG}"; then
+            PLUGINS+=(${ARG})
+        else
+            DOMAINS+=(${ARG})
+        fi
+    done
+
+    DOMAINS="${DOMAINS[@]}"
+    PLUGINS="${PLUGINS[@]}"
+}
+
+led2a() {
     DOMAINDIR="${1}"
-    PLUGINOPTS=""
+    DOMAIN=$(basename "${DOMAINDIR}")
+    DOMAINS=$(cat "${DOMAINDIR}/.domains")
+    RETARGS=""
+
+    for DOMAIN in ${DOMAIN} ${DOMAINS}; do
+        if [ -n "${RETARGS}" ]; then
+            RETARGS+=" "
+        fi
+
+        RETARGS+="-d \"${DOMAIN}:${WWWPATH}\""
+    done
 
     for PLUGIN in ${SLEPLUGINS[@]}; do
         if ! [ -e "${DOMAINDIR}/${PLUGIN}" ]; then
             continue
         fi
 
-        if [ -n "${PLUGINOPTS}" ]; then
-            PLUGINOPTS+=" "
+        if [ -n "${RETARGS}" ]; then
+            RETARGS+=" "
         fi
 
-        PLUGINOPTS+="-f ${PLUGIN}"
+        RETARGS+="-f ${PLUGIN}"
     done
 
-    echo "${PLUGINOPTS}"
+    echo "${RETARGS}"
 }
 
-lep2o() {
-    PLUGINOPTS=""
+lea2a() {
+    RETARGS=""
 
-    for PLUGIN in ${@}; do
-        if [ -n "${PLUGINOPTS}" ] ; then
-            PLUGINOPTS+=" "
+    for ARG in ${@}; do
+        if [ -n "${RETARGS}" ] ; then
+            RETARGS+=" "
         fi
 
-        PLUGINOPTS+=" -f ${PLUGIN}"
+        if leisplugin "${ARG}"; then
+            RETARGS+="-f ${PLUGIN}"
+        else
+            RETARGS+="-d \"${ARG}:${WWWPATH}\""
+        fi
     done
 
-    echo "${PLUGINOPTS}"
+    echo "${RETARGS}"
 }
 
 lecreate() {
     DOMAIN="${1}"
     MYUSER="${2}"
-    PLUGINS="${@:3}"
     DOMAINDIR="${CERTROOT}/${DOMAIN}"
+    ledomplug "${@:3}"
 
     [ -n "${DOMAIN}" ] && [ -n "${MYUSER}" ] && [ -n "${PLUGINS}" ] || leusage
     [ -e "${DOMAINDIR}" ] && jge_log_error "${DOMAIN} already exists"
@@ -99,7 +150,7 @@ lecreate() {
     fi
 
     PLUGINS+=" account_key.json"
-    SLEARGS="${EMAIL} -d \"${DOMAIN}:${WWWPATH}\" $(lep2o ${PLUGINS})"
+    SLEARGS="${EMAIL} $(lea2a ${DOMAIN} ${DOMAINS} ${PLUGINS})"
 
     if ! slecmd "${DOMAINDIR}" "${SLEARGS}"; then
         rm -rf "${DOMAINDIR}"
@@ -110,6 +161,10 @@ lecreate() {
         chmod 600 "${CERTROOT}/account_key.json"
         ln -sf "../account_key.json" "${DOMAINDIR}"
     fi
+
+    for DOMAIN in ${DOMAINS}; do
+        echo "${DOMAIN}" >> "${DOMAINDIR}/.domains"
+    done
 }
 
 lerevoke() {
@@ -119,7 +174,7 @@ lerevoke() {
     [ -n "${DOMAIN}" ] || leusage
     [ -e "${DOMAINDIR}" ] || jge_log_error "${DOMAIN} does not exist"
 
-    SLEARGS="--revoke $(led2o ${DOMAINDIR})"
+    SLEARGS="--revoke $(led2a ${DOMAINDIR})"
 
     if slecmd "${DOMAINDIR}" "${SLEARGS}"; then
         rm -rf "${DOMAINDIR}"
@@ -132,7 +187,7 @@ leupdate() {
 
     for DOMAIN in ${DOMAINS}; do
         DOMAINDIR="${CERTROOT}/${DOMAIN}"
-        SLEARGS="-d \"${DOMAIN}:${WWWPATH}\" $(led2o ${DOMAINDIR})"
+        SLEARGS=$(led2a "${DOMAINDIR}")
 
         if slecmd "${DOMAINDIR}" "${SLEARGS}"; then
             RETVAL=0
@@ -143,6 +198,17 @@ leupdate() {
 }
 
 jge_require_user root
+
+if [ "${TESTING}" == "yes" ]; then
+    if [ -e "${CERTROOT}" -a ! -e "${CERTROOT}/.testing" ]; then
+        jge_log_error "${CERTROOT} is setup for production"
+    fi
+
+    mkdir -p "${CERTROOT}"
+    touch "${CERTROOT}/.testing"
+elif [ -e "${CERTROOT}/.testing" ]; then
+    jge_log_error "${CERTROOT} is setup for testing"
+fi
 
 case "${1}" in
     create) lecreate "${2}" "${3}" "${@:4}" ;;
