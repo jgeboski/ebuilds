@@ -7,6 +7,5 @@
   </maintainer>
   <use>
     <flag name="grub">Install the grub management script</flag>
-    <flag name="lecerts">Install the Let's Encrypt management script</flag>
   </use>
 </pkgmetadata>
