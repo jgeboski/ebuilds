@@ -20,6 +20,7 @@ IUSE="doc"
 
 RDEPEND="
 	>=virtual/jdk-1.6
+	<media-libs/opencv-3.1:0/3.0
 	app-accessibility/espeak
 	app-text/aspell
 	dev-cpp/clucene
@@ -39,7 +40,6 @@ RDEPEND="
 	media-libs/libvorbis
 	media-libs/libwebp
 	media-libs/mesa
-	media-libs/opencv
 	media-libs/portaudio
 	media-sound/fluidsynth
 	media-sound/lame
@@ -55,8 +55,6 @@ RDEPEND="
 	x11-libs/pixman
 	virtual/opencl
 	virtual/opengl"
-
-DEPEND="${RDEPEND}"
 
 RESTRICT="bindist fetch mirror"
 QA_PREBUILT="*"
