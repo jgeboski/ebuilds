@@ -1,0 +1,26 @@
+#!/sbin/runscript
+# Copyright 1999-2015 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+DAEMON="/usr/bin/cherrymusic"
+HOMEDIR="/var/lib"
+USER="${SVCNAME}:${SVCNAME}"
+
+command="/usr/bin/cherrymusic"
+pidfile="/run/${SVCNAME}/${SVCNAME}.pid"
+required_dirs="${HOMEDIR}/${SVCNAME}"
+start_stop_daemon_args="
+	--env XDG_CONFIG_HOME=${HOMEDIR}
+	--env XDG_DATA_HOME=${HOMEDIR}
+	--user ${USER}
+	--background
+	--make-pidfile"
+
+depend() {
+	need net
+}
+
+start_pre() {
+	checkpath --directory --owner ${SVCNAME} $(dirname ${pidfile})
+}
