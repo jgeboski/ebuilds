@@ -123,6 +123,7 @@ src_prepare() {
 			-name 'libmp3lame*' -o \
 			-name 'libOAuth*' -o \
 			-name 'libogg*' -o \
+			-name 'libopencv*' -o \
 			-name 'libpango*' -o \
 			-name 'libpixman*' -o \
 			-name 'libpng*' -o \
@@ -162,6 +163,7 @@ src_prepare() {
 		ln -sf /usr/$(get_libdir)/libGLU.so.1  libMesaGLU.so.1
 	)
 	(
+		mkdir -p SystemFiles/Links/HTTPClient/LibraryResources/${MY_ARCH}
 		cd SystemFiles/Links/HTTPClient/LibraryResources/${MY_ARCH}
 		ln -sf /usr/$(get_libdir)/libcrypto.so
 		ln -sf /usr/$(get_libdir)/libcurl.so
