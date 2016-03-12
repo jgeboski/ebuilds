@@ -12,7 +12,7 @@ DESCRIPTION="Lightweight, customizable, and self-hosted RSS feed aggregator"
 HOMEPAGE="http://freshrss.org"
 SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${MY_PV}.tar.gz -> ${MY_PV}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="AGPL-3"
 KEYWORDS="~*"
 IUSE="mysql +sqlite test"
 
@@ -35,7 +35,7 @@ S="${WORKDIR}/FreshRSS-${MY_PV}"
 
 src_install() {
 	webapp_src_preinst
-	dodoc CHANGELOG.md CONTRIBUTING.md CREDITS.md LICENSE README.md
+	dodoc CHANGELOG.md CONTRIBUTING.md CREDITS.md README.md
 
 	insinto "/${MY_HTDOCSDIR}"
 	doins -r app data extensions lib p
