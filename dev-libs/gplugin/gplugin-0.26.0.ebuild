@@ -23,7 +23,7 @@ REQUIRED_USE="
 	python? ( introspection )"
 
 RDEPEND="
-	>=dev-libs/glib-2.20
+	>=dev-libs/glib-2.32
 	gtk? ( x11-libs/gtk+:3 )
 	introspection? ( dev-libs/gobject-introspection )
 	lua? (
