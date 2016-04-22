@@ -21,6 +21,7 @@ RDEPEND="
 
 DEPEND="
 	${RDEPEND}
+	virtual/pkgconfig
 	test? ( dev-libs/check )"
 
 pkg_pretend() {
