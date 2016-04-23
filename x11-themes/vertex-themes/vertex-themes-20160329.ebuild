@@ -24,7 +24,7 @@ DEPEND="
 	${RDEPEND}"
 
 RESTRICT="binchecks strip"
-S="${WORKDIR}/Vertex-theme-${PV}"
+S="${WORKDIR}/vertex-theme-${PV}"
 
 src_prepare() {
 	epatch_user
