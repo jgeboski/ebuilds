@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer>
+  <maintainer type="person">
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
-  <description>Plugin for Thunar that adds context-menu items from dropbox</description>
   <upstream>
     <maintainer status="inactive">
       <name>Maato</name>

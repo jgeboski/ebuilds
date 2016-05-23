@@ -14,7 +14,7 @@ SRC_URI="https://bitbucket.org/pxb1988/dex2jar/downloads/${P}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE=""
 
 RDEPEND="
@@ -28,18 +28,21 @@ src_prepare() {
 }
 
 src_install() {
+	local bin
+	local lib
+
 	java-pkg_register-dependency antlr-${MY_ANTLR_SLOT}
 	java-pkg_register-dependency asm-${MY_ASM_SLOT}
 	java-pkg_jarinto /opt/${PN}
 
 	for lib in lib/*.jar; do
-		name=$(basename "${lib}" .jar | rev | cut -d- -f2- | rev)
+		local name=$(basename "${lib}" .jar | rev | cut -d- -f2- | rev)
 		java-pkg_newjar "${lib}" "${name}.jar"
 	done
 
 	for bin in *.sh; do
-		name=$(basename "${bin}" .sh)
-		main=$(grep -h /d2j_invoke "${bin}" | awk '{print $2}' | tr -d \")
+		local name=$(basename "${bin}" .sh)
+		local main=$(grep -h /d2j_invoke "${bin}" | awk '{print $2}' | tr -d \")
 		java-pkg_dolauncher "${name}" --main "${main}"
 	done
 }

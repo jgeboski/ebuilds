@@ -8,7 +8,7 @@ inherit vim-plugin
 
 if [[ "${PV}" != 9999* ]]; then
 	SRC_URI="https://github.com/tpope/vim-vividchalk/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~*"
+	KEYWORDS="~amd64 ~arm ~x86"
 	S="${WORKDIR}/vim-${P}"
 else
 	inherit git-2

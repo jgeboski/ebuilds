@@ -18,7 +18,7 @@ IUSE=""
 RDEPEND="
 	>=net-im/bitlbee-3.4[plugins]
 	>=dev-libs/glib-2.32.0
-	>=dev-libs/libgcrypt-1.5.0"
+	>=dev-libs/libgcrypt-1.5.0:0="
 DEPEND="
 	${RDEPEND}
 	virtual/pkgconfig"

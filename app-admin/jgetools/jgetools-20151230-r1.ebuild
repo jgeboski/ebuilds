@@ -11,7 +11,7 @@ HOMEPAGE="https://github.com/jgeboski/ebuilds"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="~amd64 ~x86"
 IUSE="grub"
 
 RDEPEND="
@@ -26,6 +26,8 @@ src_unpack() {
 }
 
 src_install() {
+	local bin
+
 	insinto /usr/share/jgetools
 	doins "${FILESDIR}"/lib/*
 

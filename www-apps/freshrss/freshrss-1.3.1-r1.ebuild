@@ -13,15 +13,14 @@ HOMEPAGE="http://freshrss.org"
 SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${MY_PV}.tar.gz -> ${MY_PV}.tar.gz"
 
 LICENSE="AGPL-3"
-KEYWORDS="~*"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE="mysql +sqlite test"
 
 RDEPEND="
 	>=dev-lang/php-5.2.1[mysql?,sqlite?,ctype,curl,gmp,intl,json,xml,zip]
 	virtual/httpd-php"
 
-DEPEND="
-	test? ( dev-php/phpunit )"
+#DEPEND="test? ( dev-php/phpunit )"
 
 need_httpd_cgi
 S="${WORKDIR}/FreshRSS-${MY_PV}"

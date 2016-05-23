@@ -14,7 +14,7 @@ SRC_URI="https://bitbucket.org/gplugin/main/downloads/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE="gtk introspection lua nls perl python test"
 
 REQUIRED_USE="
@@ -28,7 +28,7 @@ RDEPEND="
 	introspection? ( dev-libs/gobject-introspection )
 	lua? (
 		|| (
-			>=dev-lang/lua-5.1
+			>=dev-lang/lua-5.1:=
 			>=dev-lang/luajit-2
 		)
 		dev-lua/lgi

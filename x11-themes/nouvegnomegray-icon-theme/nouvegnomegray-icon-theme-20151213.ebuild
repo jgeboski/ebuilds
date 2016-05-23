@@ -12,7 +12,7 @@ SRC_URI="http://orig06.deviantart.net/a542/f/2015/347/6/6/nouvegnomegray_by_tsuj
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE=""
 
 DEPEND="$(unpacker_src_uri_depends)"
@@ -31,21 +31,20 @@ done
 
 src_prepare() {
 	while read line; do
-		link=(${line/->/ })
-		path=($(echo "${link[@]}" | xargs -n1 dirname))
-		name=($(echo "${link[@]}" | xargs -n1 basename))
+		local link=(${line/->/ })
 
 		if [ "${#link[@]}" != "2" ]; then
 			continue
 		fi
 
-		[ "${path[1]}" == "." ]
-		dirc=${path[$?]}
+		local path=($(echo "${link[@]}" | xargs -n1 dirname))
+		local name=($(echo "${link[@]}" | xargs -n1 basename))
+		local dirc=${path[$?]}
 
 		for size in ${MY_SIZES[@]}; do
-			file=$(find "${size}/${dirc}" -name "${name[1]}.*" | head -1)
-			dirp=$([ "${path[1]}" == "." ] || echo "../")
-			ext=${file##*.}
+			local file=$(find "${size}/${dirc}" -name "${name[1]}.*" | head -1)
+			local dirp=$([ "${path[1]}" == "." ] || echo "../")
+			local ext=${file##*.}
 
 			if [ -n "${file}" ]; then
 				ln -sf "${dirp}${link[1]}.${ext}" "${size}/${link[0]}.${ext}"

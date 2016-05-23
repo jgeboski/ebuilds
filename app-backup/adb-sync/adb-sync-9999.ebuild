@@ -13,7 +13,7 @@ EGIT_REPO_URI="https://github.com/google/adb-sync.git"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="~amd64 ~x86"
 IUSE="+channel"
 
 RDEPEND="

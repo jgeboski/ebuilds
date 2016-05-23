@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer>
+  <maintainer type="person">
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
-  <description>Transparent and scalable SSL/TLS interception</description>
   <upstream>
     <maintainer status="active">
       <name>Daniel Roethlisberger</name>
