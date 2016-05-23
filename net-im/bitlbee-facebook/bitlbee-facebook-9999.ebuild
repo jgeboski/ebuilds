@@ -7,8 +7,8 @@ EAPI="5"
 inherit autotools eutils git-2
 
 DESCRIPTION="Facebook protocol plugin for BitlBee"
-HOMEPAGE="https://github.com/jgeboski/bitlbee-facebook"
-EGIT_REPO_URI="https://github.com/jgeboski/bitlbee-facebook.git"
+HOMEPAGE="https://github.com/bitlbee/bitlbee-facebook"
+EGIT_REPO_URI="https://github.com/bitlbee/bitlbee-facebook.git"
 
 LICENSE="GPL-2"
 SLOT="0"

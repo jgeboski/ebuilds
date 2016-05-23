@@ -6,11 +6,7 @@
     <email>jgeboski@gmail.com</email>
   </maintainer>
   <upstream>
-    <maintainer status="active">
-      <name>James Geboski</name>
-      <email>jgeboski@gmail.com</email>
-    </maintainer>
-    <bugs-to>https://github.com/jgeboski/bitlbee-facebook/issues</bugs-to>
-    <remote-id type="github">jgeboski/bitlbee-facebook</remote-id>
+    <bugs-to>https://github.com/bitlbee/bitlbee-facebook/issues</bugs-to>
+    <remote-id type="github">bitlbee/bitlbee-facebook</remote-id>
   </upstream>
 </pkgmetadata>
