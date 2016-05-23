@@ -5,4 +5,12 @@
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
+  <upstream>
+    <maintainer status="active">
+      <name>Tim Pope</name>
+      <email>github@tpope.org</email>
+    </maintainer>
+    <bugs-to>https://github.com/tpope/vim-vividchalk/issues</bugs-to>
+    <remote-id type="github">tpope/vim-vividchalk</remote-id>
+  </upstream>
 </pkgmetadata>

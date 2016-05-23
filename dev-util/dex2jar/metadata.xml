@@ -5,4 +5,12 @@
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
+  <upstream>
+    <maintainer status="active">
+      <name>Bob Pan</name>
+      <email>pxb1988@gmail.com</email>
+    </maintainer>
+    <bugs-to>https://github.com/pxb1988/dex2jar/issues</bugs-to>
+    <remote-id type="github">pxb1988/dex2jar</remote-id>
+  </upstream>
 </pkgmetadata>

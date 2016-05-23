@@ -5,6 +5,10 @@
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
+  <upstream>
+    <bugs-to>https://github.com/google/adb-sync/issues</bugs-to>
+    <remote-id type="github">google/adb-sync</remote-id>
+  </upstream>
   <use>
     <flag name="channel">Install the adb-channel script</flag>
   </use>

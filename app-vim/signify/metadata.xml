@@ -5,4 +5,16 @@
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
+  <upstream>
+    <maintainer status="active">
+      <name>Marco Hinz</name>
+      <email>mh.codebro@gmail.com</email>
+    </maintainer>
+    <maintainer status="active">
+      <name>James McCoy</name>
+      <email>jamessan@jamessan.com</email>
+    </maintainer>
+    <bugs-to>https://github.com/mhinz/vim-signify/issues</bugs-to>
+    <remote-id type="github">mhinz/vim-signify</remote-id>
+  </upstream>
 </pkgmetadata>

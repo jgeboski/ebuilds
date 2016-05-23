@@ -5,6 +5,14 @@
     <name>James Geboski</name>
     <email>jgeboski@gmail.com</email>
   </maintainer>
+  <upstream>
+    <maintainer status="active">
+      <name>James Geboski</name>
+      <email>jgeboski@gmail.com</email>
+    </maintainer>
+    <bugs-to>https://github.com/jgeboski/ebuilds/issues</bugs-to>
+    <remote-id type="github">jgeboski/ebuilds</remote-id>
+  </upstream>
   <use>
     <flag name="grub">Install the grub management script</flag>
   </use>
