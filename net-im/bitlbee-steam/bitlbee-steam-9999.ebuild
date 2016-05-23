@@ -7,8 +7,8 @@ EAPI="5"
 inherit autotools eutils git-2
 
 DESCRIPTION="Steam protocol plugin for BitlBee"
-HOMEPAGE="https://github.com/jgeboski/bitlbee-steam"
-EGIT_REPO_URI="https://github.com/jgeboski/bitlbee-steam.git"
+HOMEPAGE="https://github.com/bitlbee/bitlbee-steam"
+EGIT_REPO_URI="https://github.com/bitlbee/bitlbee-steam.git"
 
 LICENSE="GPL-2"
 SLOT="0"
