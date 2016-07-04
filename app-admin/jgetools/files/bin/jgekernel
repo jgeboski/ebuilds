@@ -11,6 +11,10 @@ set -e
 VERSION="${1}"
 MAKEDIR="${SRCDIR}/linux-${VERSION}"
 
+lnorcp() {
+    ln -sf "${1}" "${2}" 2>/dev/null || cp "${1}" "${2}"
+}
+
 kver() {
     basename $(eselect kernel show | tail -1) | cut -d- -f2
 }
@@ -59,9 +63,9 @@ kinstall() {
         "${IMAGE}" \
         "/boot/vmlinuz-${VERSION}"
 
-    ln -sf "config-${VERSION}" /boot/config
-    ln -sf "System.map-${VERSION}" /boot/System.map
-    ln -sf "vmlinuz-${VERSION}" /boot/vmlinuz
+    lnorcp "config-${VERSION}" /boot/config
+    lnorcp "System.map-${VERSION}" /boot/System.map
+    lnorcp "vmlinuz-${VERSION}" /boot/vmlinuz
 
     make -C "${MAKEDIR}" modules_install
     PROFILE="/etc/portage/profile/package.provided"
