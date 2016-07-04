@@ -15,6 +15,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="grub"
 
 RDEPEND="
+	dev-lang/perl
 	sys-apps/portage
 	grub? ( sys-boot/grub:2[-multislot] )"
 DEPEND=""

@@ -12,7 +12,12 @@ VERSION="${1}"
 MAKEDIR="${SRCDIR}/linux-${VERSION}"
 
 lnorcp() {
-    ln -sf "${1}" "${2}" 2>/dev/null || cp "${1}" "${2}"
+    PREFIX=$(dirname "${2}")
+    ln -sf "${1}" "${2}" 2>/dev/null || cp "${PREFIX}/${1}" "${2}"
+}
+
+isrpi() {
+    grep -q '^CONFIG_RASPBERRYPI_FIRMWARE=[my]$' "${MAKEDIR}/.config"
 }
 
 kver() {
@@ -52,16 +57,29 @@ kinstall() {
 
     IMAGE=$(find "${MAKEDIR}/arch" -name bzImage -o -name zImage | head -1)
 
-    mkdir -p /boot
-    install -Tm 0644 \
+    if isrpi; then
+        mkdir -p /boot
+        "${MAKEDIR}/scripts/mkknlimg" \
+            "${IMAGE}" \
+            "/boot/vmlinuz-${VERSION}"
+    else
+        install -DTm 0644 \
+            "${IMAGE}" \
+            "/boot/vmlinuz-${VERSION}"
+    fi
+
+    rm -rf /boot/*.dtb /boot/overlays/*.dtbo
+    find "${MAKEDIR}/arch" -name '*.dtb' \
+        -exec install -Dm 0644 -t /boot {} \;
+    find "${MAKEDIR}/arch" -name '*.dtbo' \
+        -exec install -Dm 0644 -t /boot/overlays {} \;
+
+    install -DTm 0644 \
         "${MAKEDIR}/.config" \
         "/boot/config-${VERSION}"
-    install -Tm 0644 \
+    install -DTm 0644 \
         "${MAKEDIR}/System.map" \
         "/boot/System.map-${VERSION}"
-    install -Tm 0644 \
-        "${IMAGE}" \
-        "/boot/vmlinuz-${VERSION}"
 
     lnorcp "config-${VERSION}" /boot/config
     lnorcp "System.map-${VERSION}" /boot/System.map
