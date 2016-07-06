@@ -32,10 +32,13 @@ kupgrade() {
     TARFILE="linux-${VERSION}.tar.xz"
     TARURL="${MIRROR}/v${VERSION%%.*}.x/${TARFILE}"
 
-    wget -cO "${SRCDIR}/${TARFILE}" "${TARURL}"
-    tar xf "${SRCDIR}/${TARFILE}" -C "${SRCDIR}"
-    rm -f "${SRCDIR}/${TARFILE}"
+    if ! [ -e "${MAKEDIR}" ]; then
+        wget -cO "${SRCDIR}/${TARFILE}" "${TARURL}"
+        tar xf "${SRCDIR}/${TARFILE}" -C "${SRCDIR}"
+        rm -f "${SRCDIR}/${TARFILE}"
+    fi
 
+    make -C "${MAKEDIR}" mrproper
     cp "/boot/config-$(kver)" "${MAKEDIR}/.config"
     make -C "${MAKEDIR}" oldconfig
     jge_log_notice "make any configuration changes before compiling"
