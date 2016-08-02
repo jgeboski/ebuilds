@@ -7,8 +7,8 @@ EAPI="5"
 inherit autotools eutils
 
 DESCRIPTION="An elegant GTK2, GTK3, and GNOME theme"
-HOMEPAGE="https://github.com/horst3180/Vertex-theme"
-SRC_URI="https://github.com/horst3180/Vertex-theme/archive/${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/horst3180/vertex-theme"
+SRC_URI="https://github.com/horst3180/vertex-theme/archive/${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -22,7 +22,6 @@ RDEPEND="
 
 DEPEND="virtual/pkgconfig"
 RESTRICT="binchecks strip"
-S="${WORKDIR}/vertex-theme-${PV}"
 
 src_prepare() {
 	epatch_user
