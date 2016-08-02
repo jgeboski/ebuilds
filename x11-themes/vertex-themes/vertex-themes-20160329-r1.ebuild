@@ -16,13 +16,11 @@ KEYWORDS="~amd64 ~arm ~x86"
 IUSE="ayatana dark gnome gtk2 gtk3 light xfwm"
 
 RDEPEND="
-	gtk2? ( x11-themes/gtk-engines-murrine )"
+	x11-themes/gnome-themes-standard
+	gtk2? ( x11-themes/gtk-engines-murrine )
+	gtk3? ( x11-libs/gtk+:3= )"
 
-DEPEND="
-	x11-libs/gtk+:3
-	virtual/pkgconfig
-	${RDEPEND}"
-
+DEPEND="virtual/pkgconfig"
 RESTRICT="binchecks strip"
 S="${WORKDIR}/vertex-theme-${PV}"
 
