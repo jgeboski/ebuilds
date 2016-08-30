@@ -6,24 +6,23 @@ EAPI="5"
 
 inherit webapp
 
-MY_PV="${PV}-beta"
-
 DESCRIPTION="Lightweight, customizable, and self-hosted RSS feed aggregator"
 HOMEPAGE="http://freshrss.org"
-SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${MY_PV}.tar.gz -> ${MY_PV}.tar.gz"
+SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="AGPL-3"
 KEYWORDS="~amd64 ~arm ~x86"
 IUSE="mysql +sqlite"
 
 RDEPEND="
-	>=dev-lang/php-5.3[mysql?,sqlite?,ctype,curl,gmp,intl,json,xml,zip]
-	virtual/httpd-php"
+	>=dev-lang/php-5.3.3[mysql?,sqlite?,ctype,curl,gmp,intl,json,xml,zip]
+	virtual/httpd-php
+	mysql? ( >=virtual/mysql-5.5.3 )"
 
 #DEPEND="test? ( dev-php/phpunit )"
 
 need_httpd_cgi
-S="${WORKDIR}/FreshRSS-${MY_PV}"
+S="${WORKDIR}/FreshRSS-${PV}"
 
 # Testing is severely broken, seemingly unfinished, and seems to get
 # little attention by upstream.
