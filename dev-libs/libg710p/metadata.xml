@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <name>James Geboski</name>
+    <email>jgeboski@gmail.com</email>
+  </maintainer>
+  <upstream>
+    <maintainer status="active">
+      <name>James Geboski</name>
+      <email>jgeboski@gmail.com</email>
+    </maintainer>
+    <bugs-to>https://github.com/jgeboski/libg710p/issues</bugs-to>
+    <remote-id type="github">jgeboski/libg710p</remote-id>
+  </upstream>
+  <use>
+    <flag name="tools">Build and install demo tools</flag>
+  </use>
+</pkgmetadata>
