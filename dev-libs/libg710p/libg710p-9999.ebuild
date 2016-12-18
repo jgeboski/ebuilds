@@ -24,7 +24,8 @@ RDEPEND="
 			sys-libs/argp-standalone
 		)
 		media-sound/pulseaudio
-	)"
+	)
+	dev-libs/hidapi"
 
 DEPEND="
 	${RDEPEND}
