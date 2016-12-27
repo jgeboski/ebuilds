@@ -3,8 +3,10 @@
 # $Header: $
 
 EAPI="5"
+PYTHON_COMPAT=( python2_7 python3_{3,4,5} )
+PYTHON_REQ_USE="threads(+)"
 
-inherit eutils gnome2-utils multilib waf-utils
+inherit eutils gnome2-utils multilib python-any-r1 waf-utils
 
 DESCRIPTION="Plugin for Thunar that adds context-menu items from dropbox"
 HOMEPAGE="http://softwarebakery.com/maato/thunar-dropbox.html"
