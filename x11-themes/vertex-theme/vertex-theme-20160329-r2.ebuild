@@ -38,5 +38,6 @@ src_configure() {
 		$(use_enable gtk3) \
 		$(use_enable light) \
 		$(use_enable xfwm) \
-		--disable-cinnamon
+		--disable-cinnamon \
+		--with-gnome=$(ls -1 common/gtk-3.0 | tail -1)
 }
