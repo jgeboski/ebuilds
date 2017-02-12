@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -28,7 +28,7 @@ RDEPEND="
 	introspection? ( dev-libs/gobject-introspection )
 	lua? (
 		|| (
-			>=dev-lang/lua-5.1:=
+			>=dev-lang/lua-5.1:*
 			>=dev-lang/luajit-2
 		)
 		dev-lua/lgi
