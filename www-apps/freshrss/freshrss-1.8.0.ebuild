@@ -11,12 +11,13 @@ SRC_URI="https://github.com/FreshRSS/FreshRSS/archive/${PV}.tar.gz -> ${P}.tar.g
 
 LICENSE="AGPL-3"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="mysql +sqlite"
+IUSE="mysql postgres +sqlite"
 
 RDEPEND="
-	>=dev-lang/php-5.3.3[mysql?,sqlite?,ctype,curl,gmp,intl,json,xml,zip]
+	>=dev-lang/php-5.3.3[mysql?,postgres?,sqlite?,ctype,curl,gmp,intl,json,xml,zip]
 	virtual/httpd-php
-	mysql? ( >=virtual/mysql-5.5.3 )"
+	mysql? ( >=virtual/mysql-5.5.3 )
+	postgres? ( >=dev-db/postgresql-9.2 )"
 
 #DEPEND="test? ( dev-php/phpunit )"
 
