@@ -8,7 +8,7 @@ inherit gnome2-utils unpacker
 
 DESCRIPTION="Light gray icon set for GNOME"
 HOMEPAGE="http://tsujan.deviantart.com/art/nouveGnomeGray-300365158"
-SRC_URI="http://orig06.deviantart.net/a542/f/2015/347/6/6/nouvegnomegray_by_tsujan-d4ytv8m.7z"
+SRC_URI="https://orig00.deviantart.net/e36f/f/2017/277/e/c/nouvegnomegray_by_tsujan-d4ytv8m.7z"
 
 LICENSE="GPL-3"
 SLOT="0"
