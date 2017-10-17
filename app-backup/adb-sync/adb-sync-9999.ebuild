@@ -4,7 +4,7 @@
 EAPI="5"
 PYTHON_COMPAT=( python2_7 python3_{3,4,5} )
 
-inherit git-2 python-single-r1 python-utils-r1
+inherit git-r3 python-single-r1 python-utils-r1
 
 DESCRIPTION="Tool to synchronize files between a PC and an Android device using ADB"
 HOMEPAGE="https://github.com/google/adb-sync"

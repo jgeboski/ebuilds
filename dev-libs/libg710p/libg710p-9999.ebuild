@@ -3,7 +3,7 @@
 
 EAPI="5"
 
-inherit autotools eutils git-2 udev
+inherit autotools eutils git-r3 udev
 
 DESCRIPTION="Library for interfacing with Logitech G710+ keyboards"
 HOMEPAGE="https://github.com/jgeboski/libg710p"

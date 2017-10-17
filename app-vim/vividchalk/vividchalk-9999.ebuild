@@ -10,7 +10,7 @@ if [[ "${PV}" != 9999* ]]; then
 	KEYWORDS="~amd64 ~arm ~x86"
 	S="${WORKDIR}/vim-${P}"
 else
-	inherit git-2
+	inherit git-r3
 	EGIT_REPO_URI="https://github.com/tpope/vim-vividchalk.git"
 fi
 

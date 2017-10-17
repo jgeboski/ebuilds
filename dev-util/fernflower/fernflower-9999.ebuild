@@ -3,7 +3,7 @@
 
 EAPI="5"
 
-inherit java-pkg-2 java-ant-2 git-2
+inherit java-pkg-2 java-ant-2 git-r3
 
 DESCRIPTION="Analytical decompiler for Java"
 HOMEPAGE="https://github.com/JetBrains/intellij-community"

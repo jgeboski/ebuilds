@@ -3,7 +3,7 @@
 
 EAPI="5"
 
-inherit git-2 multilib
+inherit git-r3 multilib
 
 DESCRIPTION="ZNC module which plays back buffers on command"
 HOMEPAGE="http://wiki.znc.in/PBCmd"

@@ -3,7 +3,7 @@
 
 EAPI="5"
 
-inherit autotools eutils git-2
+inherit autotools eutils git-r3
 
 DESCRIPTION="Facebook protocol plugin for BitlBee"
 HOMEPAGE="https://github.com/bitlbee/bitlbee-facebook"
