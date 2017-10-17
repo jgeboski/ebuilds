@@ -33,11 +33,12 @@ S="${WORKDIR}/FreshRSS-${PV}"
 
 src_install() {
 	webapp_src_preinst
-	dodoc CHANGELOG.md CONTRIBUTING.md CREDITS.md README.md
+	dodoc CHANGELOG.md CONTRIBUTING.md CREDITS.md README.md README.fr.md
 
 	insinto "/${MY_HTDOCSDIR}"
 	doins -r app data extensions lib p
-	doins constants.php index.html index.php
+	doins config-user.default.php config.default.php constants.php
+	doins force-https.default.txt index.html index.php
 
 	webapp_serverowned -R "${MY_HTDOCSDIR}/data"
 	webapp_src_install
