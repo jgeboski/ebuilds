@@ -36,7 +36,7 @@ src_install() {
 	dodoc CHANGELOG.md CONTRIBUTING.md CREDITS.md README.md README.fr.md
 
 	insinto "/${MY_HTDOCSDIR}"
-	doins -r app data extensions lib p
+	doins -r app cli data extensions lib p
 	doins config-user.default.php config.default.php constants.php
 	doins force-https.default.txt index.html index.php
 
