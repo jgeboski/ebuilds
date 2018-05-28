@@ -51,6 +51,10 @@ kcompile() {
 
     make -C "${MAKEDIR}" clean
     make -C "${MAKEDIR}" ${MAKEOPTS}
+
+    if [ -e /usr/bin/genkernel ]; then
+        genkernel --kerneldir="${MAKEDIR}" ramdisk
+    fi
 }
 
 kinstall() {
@@ -91,6 +95,11 @@ kinstall() {
     make -C "${MAKEDIR}" modules_install
     PROFILE="/etc/portage/profile/package.provided"
 
+    INITRD="initramfs-genkernel-$(uname -m)-${VERSION}"
+    if [ -e "/boot/${INITRD}" ]; then
+        lnorcp "${INITRD}" /boot/initrd
+    fi
+
     if [ -e "${PROFILE}" ]; then
         sed -i "\|^${PROPKG}-$(kver)\$|d" "${PROFILE}"
     fi
@@ -112,8 +121,9 @@ kcleanup() {
         -type f -a ! -name "*-${VERSION}" -a \
         \( \
             -name "config-*" -o \
-            -name "vmlinuz-*" -o \
-            -name "System.map-*" \
+            -name "initramfs-genkernel-$(uname -m)-*" -o \
+            -name "System.map-*" -o \
+            -name "vmlinuz-*" \
         \) -exec rm -i {} \;
 
     find /lib/modules -maxdepth 1 -depth \
