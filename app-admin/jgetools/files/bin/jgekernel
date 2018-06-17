@@ -51,10 +51,6 @@ kcompile() {
 
     make -C "${MAKEDIR}" clean
     make -C "${MAKEDIR}" ${MAKEOPTS}
-
-    if [ -e /usr/bin/genkernel ]; then
-        genkernel --kerneldir="${MAKEDIR}" ramdisk
-    fi
 }
 
 kinstall() {
@@ -95,9 +91,9 @@ kinstall() {
     make -C "${MAKEDIR}" modules_install
     PROFILE="/etc/portage/profile/package.provided"
 
-    INITRD="initramfs-genkernel-$(uname -m)-${VERSION}"
-    if [ -e "/boot/${INITRD}" ]; then
-        lnorcp "${INITRD}" /boot/initrd
+    if [ -e /usr/bin/dracut ]; then
+        dracut --force --kver="${VERSION}"
+        lnorcp "initramfs-${VERSION}.img" /boot/initramfs.img
     fi
 
     if [ -e "${PROFILE}" ]; then
